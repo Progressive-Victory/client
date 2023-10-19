@@ -1,5 +1,5 @@
 import { DiscordAPIError, Interaction } from 'discord.js';
-import Logger from 'logger';
+import { logger } from '.';
 
 export async function onInteractionCreate(interaction: Interaction) {
 	let interactionName: string;
@@ -18,7 +18,7 @@ export async function onInteractionCreate(interaction: Interaction) {
 		else if (interaction.isAutocomplete()) {
 			const autocomplete = client.commands.get(interaction.commandName)?.autocomplete;
 			if (!autocomplete) {
-				Logger.warn(`Autocomplete for ${interaction.commandName} was not Setup`);
+				logger.warn(`Autocomplete for ${interaction.commandName} was not Setup`);
 			}
 			else {
 				await autocomplete(interaction);
@@ -45,10 +45,10 @@ export async function onInteractionCreate(interaction: Interaction) {
 		if (interaction.isRepliable()) {
 			// If the error is from the discord api is is logged
 			if (error instanceof DiscordAPIError) {
-				Logger.error(error);
+				logger.error(error);
 			}
 			else if (error instanceof Error) {
-				Logger.error(error);
+				logger.error(error);
 				// Check if client is set to not send reply on error
 				if (!interaction.client.replyOnError) return;
 
@@ -57,15 +57,15 @@ export async function onInteractionCreate(interaction: Interaction) {
 				// Check if interaction was deferred
 				if (interaction.deferred) {
 					// If defered interactions is followed up
-					await interaction.followUp({ content: errorMessage, ephemeral: true }).catch((e) => Logger.error(e));
+					await interaction.followUp({ content: errorMessage, ephemeral: true }).catch((e) => logger.error(e));
 				}
 				else {
 					// Else the interactions is replied to
-					await interaction.reply({ content: errorMessage, ephemeral: true }).catch((e) => Logger.error(e));
+					await interaction.reply({ content: errorMessage, ephemeral: true }).catch((e) => logger.error(e));
 				}
 			}
 		}
 		// If the interaction can not be repliyed to the error is logged
-		else Logger.error(error);
+		else logger.error(error);
 	}
 }

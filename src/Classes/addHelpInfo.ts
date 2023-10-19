@@ -7,6 +7,7 @@ import {
 /**
  * Definition of a constructor
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor = new (...args: any[]) => object;
 /**
  * Add Help infor to an object class
@@ -37,8 +38,8 @@ export function addHelpInfo<T extends Constructor>(Base: T) {
 
 		public getHelpInfo(locale: Locale): { title: string; description: string } {
 			return {
-				title: this.helpTitles[locale.toString()],
-				description: this.helpDescriptions[locale.toString()]
+				title: this.helpTitles[locale] ,
+				description: this.helpDescriptions[locale]
 			};
 		}
 	};

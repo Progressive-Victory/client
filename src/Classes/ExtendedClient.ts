@@ -15,11 +15,11 @@ import {
 	Snowflake
 } from 'discord.js';
 import { readdir } from 'fs/promises';
-import Logger from 'logger';
 import { join } from 'path';
 import {
 	ChatInputCommand, ContextMenuCommand, Event, Interaction
 } from '.';
+import { logger } from '..';
 import { onInteractionCreate } from '../interactionCreate';
 import {
 	ExtendedClientOptions, Mutable, TypeCommand, initOptions, tsNodeRun
@@ -83,7 +83,7 @@ export class ExtendedClient extends Client {
 	constructor(options: ExtendedClientOptions) {
 		super(options);
 
-		Logger.info('Client starting up...');
+		logger.info('Client starting up...');
 
 		// Paths
 		const {
@@ -112,7 +112,7 @@ export class ExtendedClient extends Client {
 	 * @returns the client object without the init method
 	 */
 	public async init(options: initOptions) {
-		Logger.debug('Client initializing...');
+		logger.debug('Client initializing...');
 
 		// load in dependate event, command and interaction files
 		await Promise.all([
@@ -127,7 +127,7 @@ export class ExtendedClient extends Client {
 		// update private init flag
 		this.hasInitRun = true;
 
-		Logger.debug('Client initialized');
+		logger.debug('Client initialized');
 
 		// return this object with init method omitted
 		return this as Omit<ExtendedClient, 'init'>;
@@ -151,7 +151,7 @@ export class ExtendedClient extends Client {
 		}
 
 		const numberOfEvents = this.events.size;
-		Logger.info(`Loaded ${this.events.size} events.`);
+		logger.info(`Loaded ${this.events.size} events.`);
 		return numberOfEvents;
 	}
 
@@ -201,7 +201,7 @@ export class ExtendedClient extends Client {
 			throw new DiscordjsError(DiscordjsErrorCodes.TokenMissing);
 		}
 
-		Logger.info('Deploying commands...');
+		logger.info('Deploying commands...');
 
 		if (guild === undefined) {
 			// Gets chat commands that are global
@@ -213,9 +213,9 @@ export class ExtendedClient extends Client {
 			// Put the JSON API object to the applicationCommands endpoint
 			const pushedCommands = (await this.rest
 				.put(Routes.applicationCommands(this.user.id), { body: globalDeploy })
-				.catch((e) => Logger.error(e))) as ApplicationCommand[];
+				.catch((e) => logger.error(e))) as ApplicationCommand[];
 
-			Logger.info(`Deployed ${pushedCommands.length} global command(s)`);
+			logger.info(`Deployed ${pushedCommands.length} global command(s)`);
 		}
 		else if (this.useGuildCommands) {
 			// TODO: Guild Commands Support
@@ -228,7 +228,7 @@ export class ExtendedClient extends Client {
 	 * @returns string response
 	 */
 	public async login(token?: string) {
-		Logger.debug('Start of login called');
+		logger.debug('Start of login called');
 
 		if (!this.hasInitRun) {
 			throw Error('[ERROR] client.init() has not been completed');
@@ -241,7 +241,7 @@ export class ExtendedClient extends Client {
 		// Set the REST API with the bot Token
 		this.clientMutable().rest = this.rest.setToken(token);
 
-		Logger.debug('Initializing login');
+		logger.debug('Initializing login');
 
 		return super.login(token);
 	}
@@ -301,7 +301,7 @@ export class ExtendedClient extends Client {
 		catch (error) {
 			// catch errors relating to a file destination not existing as they are not fatal to the function of the Client
 			if (this.isErrnoException(error) && error.code === 'ENOENT' && error.syscall === 'scandir') {
-				Logger.warn(`Directory not found at ${error.path}`);
+				logger.warn(`Directory not found at ${error.path}`);
 			}
 			else {
 				throw error;
