@@ -15,6 +15,7 @@ import {
 	Snowflake
 } from 'discord.js';
 import { readdir } from 'fs/promises';
+import Logger from 'logger';
 import { join } from 'path';
 import {
 	ChatInputCommand, ContextMenuCommand, Event, Interaction
