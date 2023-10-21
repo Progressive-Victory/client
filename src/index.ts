@@ -1,5 +1,25 @@
 import Logger from 'logger';
 
-const logger = new Logger();
+export { ExtendedClient as Client } from './Classes/ExtendedClient';
 
-logger.info('Hello World!');
+export type { ExtendedClientOptions as ClientOptions } from './util';
+
+export {
+	ChatInputCommand,
+	Command,
+	ContextMenuCommand,
+	Event,
+	ExtendedContextMenuCommandBuilder,
+	ExtendedSlashCommandBuilder,
+	ExtendedSlashCommandSubcommandBuilder,
+	ExtendedSlashCommandSubcommandGroupBuilder,
+	Interaction
+} from './Classes';
+
+export { ExtraColor, TimeStyles, tsNodeRun } from './util';
+
+export type { LocalizedHelpInfo } from './util';
+
+export type { TimeStyle } from './util';
+
+export const logger = new Logger();
