@@ -21,7 +21,8 @@
     "run": "node ./dist/index.js",
     "start": "yarn build && yarn run run",
     "prepare": "yarn build",
-    "prepack": "yarn build"
+    "prepack": "yarn build",
+    "postinstall": "yarn run build"
   },
   "dependencies": {
     "@swc/cli": "^0.1.62",
