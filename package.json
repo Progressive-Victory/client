@@ -22,7 +22,7 @@
     "start": "yarn build && yarn run run",
     "prepare": "yarn build",
     "prepack": "yarn build",
-    "postinstall": "yarn run build"
+    "postinstall": "swc ./src --out-dir dist"
   },
   "dependencies": {
     "@swc/cli": "^0.1.62",
