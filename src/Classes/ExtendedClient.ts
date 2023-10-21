@@ -234,7 +234,7 @@ export class ExtendedClient extends Client {
 			throw Error('[ERROR] client.init() has not been completed');
 		}
 
-		if (!process.env.TOKEN) {
+		if (typeof token === 'string') {
 			throw new Error('[ERROR] Missing token');
 		}
 
