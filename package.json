@@ -18,8 +18,8 @@
     "lint": "eslint --ignore-path .eslintignore --ext .ts",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "build": "rimraf ./dist && swc ./src --out-dir dist && tsc --emitDeclarationOnly",
-    "run": "node ./dist/index.js",
-    "start": "yarn build && yarn run run",
+    "prestart": "yarn build",
+    "start": "node ./dist/index.js",
     "prepare": "yarn build",
     "prepack": "yarn build",
     "postinstall": "swc ./src --out-dir dist && tsc --emitDeclarationOnly"
