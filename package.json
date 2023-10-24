@@ -17,11 +17,12 @@
   "scripts": {
     "lint": "eslint --ignore-path .eslintignore --ext .ts",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "build": "rimraf ./dist && swc ./src --out-dir dist",
+    "build": "rimraf ./dist && swc ./src --out-dir dist && tsc --emitDeclarationOnly",
     "run": "node ./dist/index.js",
     "start": "yarn build && yarn run run",
     "prepare": "yarn build",
-    "prepack": "yarn build"
+    "prepack": "yarn build",
+    "postinstall": "swc ./src --out-dir dist && tsc --emitDeclarationOnly"
   },
   "dependencies": {
     "@swc/cli": "^0.1.62",
