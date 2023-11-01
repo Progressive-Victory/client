@@ -1,5 +1,7 @@
 # @progressive-victory/client
 
+`@progressive-victory/client` is a general use Discord bot client that extends [discord.js](https://github.com/discordjs/discord.js)
+
 ## Usage
 
 Install of @progressive-victory/client:
@@ -9,11 +11,15 @@ npm install @progressive-victory/client
 yarn add @progressive-victory/client
 ```
 
+The client has a builting interation handler. and does not need the `interactionCreate` event to be added. The Client Does **NOT** support refix commands
+
+## Files setup
+
 Example index.ts for a bot:
 
 ```ts
 import { init } from '@i18n';
-import { Client } from 'discord-client';
+import { Client } from '@progressive-victory/client';
 
 export const client = new Client({
    receiveMessageComponents: true,
@@ -48,10 +54,38 @@ Example event for Discord client event `ready`
 
 ```ts
 import { Events } from 'discord.js';
-import {
-    Client, Event 
-} from 'discord-client';
-export default new Event().setName(Events.ClientReady).setOnce(true).setExecute((client: Client) => {
+import { Event } from '@progressive-victory/client';
+
+export default new Event().setName(Events.ClientReady).setOnce(true).setExecute((client) => {
     console.log(`Ready! Logged in as ${client.user.us}`);
+    });
+```
+
+### How to create command object
+
+Command objects are a genaric and can be used for any object the following is the example of a button interaction. Button interactions should be placed in the Dirctory path set in the `commandPath` or `contextMenuPath`
+
+```ts
+import { ChatInputCommand } from '@progressive-victory/client';
+
+export default new ChatInputCommand()
+    .setBuilder(commandBuilder)
+    .setGlobal(true)
+    .setAutocomplete(autoCompletedFunction)
+    .setExecute(executeFunction)
+```
+
+### How to create interaction object
+
+Interaction objects are a genaric and can be used for any object the following is the example of a button interaction. Button interactions should be placed in the Dirctory path set in the `buttonPath`
+
+```ts
+import { ButtonInteraction } from 'discord.js';
+import { Interaction } from '@progressive-victory/client';
+
+export default new Interaction<ButtonInteraction>()
+    .setName(buttonCustomId)
+    .setExecute(async (interaction) => {
+    console.log('button has been pressed');
     });
 ```
