@@ -1,4 +1,4 @@
-import Logger from 'logger';
+import Logger from '@progressive-victory/logger';
 
 export { ExtendedClient as Client } from './Classes/ExtendedClient';
 
