@@ -179,6 +179,19 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@progressive-victory/logger@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@progressive-victory/logger/-/logger-1.0.3.tgz#ffa5b2bed5d7ab7d8ee9ab161d94fe637b3aba14"
+  integrity sha512-ka1McQ1ECEHr9Buhsgku1C95cr3bowTdVXoB1421TiIcismu9nERf0wDAWvc85XH/vRxF8ablWJQJy9FbFS1Pg==
+  dependencies:
+    "@swc/cli" "^0.1.62"
+    "@swc/core" "^1.3.93"
+    dotenv "^16.3.1"
+    fastify "^4.22.1"
+    isomorphic-fetch "^3.0.0"
+    pino "^8.14.1"
+    pino-pretty "^10.0.0"
+
 "@sapphire/async-queue@^1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@sapphire/async-queue/-/async-queue-1.5.0.tgz#2f255a3f186635c4fb5a2381e375d3dfbc5312d8"
@@ -1432,16 +1445,6 @@ lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
-
-logger@Progressive-Victory/Logger:
-  version "1.0.0"
-  resolved "https://codeload.github.com/Progressive-Victory/Logger/tar.gz/8365df21a39aa5e2e735b02c1c819f6171bc78e5"
-  dependencies:
-    dotenv "^16.3.1"
-    fastify "^4.22.1"
-    isomorphic-fetch "^3.0.0"
-    pino "^8.14.1"
-    pino-pretty "^10.0.0"
 
 lowercase-keys@^2.0.0:
   version "2.0.0"
