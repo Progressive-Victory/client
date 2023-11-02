@@ -22,16 +22,16 @@ import { init } from '@i18n';
 import { Client } from '@progressive-victory/client';
 
 export const client = new Client({
-   receiveMessageComponents: true,
-   receiveModals: true,
-   receiveAutocomplete: true,
-   replyOnError: true,
-   splitCustomID: true,
-   splitCustomIDOn: '_',
- useGuildCommands: false
+    receiveMessageComponents: true,
+    receiveModals: true,
+    receiveAutocomplete: true,
+    replyOnError: true,
+    splitCustomID: true,
+    splitCustomIDOn: '_',
+    useGuildCommands: false
 });
 
-(async function start() {
+async function start() {
     await client.init({
         eventPath: './events',
         buttonPath: './interactions/buttons',
@@ -44,7 +44,8 @@ export const client = new Client({
     await client.login(process.env.TOKEN);
 
     await client.deploy();
-});
+};
+start();
 ```
 
 ### How to use event objects
@@ -54,10 +55,10 @@ Example event for Discord client event `ready`
 
 ```ts
 import { Events } from 'discord.js';
-import { Event } from '@progressive-victory/client';
+import { Event, logger } from '@progressive-victory/client';
 
 export default new Event().setName(Events.ClientReady).setOnce(true).setExecute((client) => {
-    console.log(`Ready! Logged in as ${client.user.us}`);
+    logger.info(`Ready! Logged in as ${client.user.username}`);
     });
 ```
 
@@ -71,7 +72,7 @@ import { ChatInputCommand } from '@progressive-victory/client';
 export default new ChatInputCommand()
     .setBuilder(commandBuilder)
     .setGlobal(true)
-    .setAutocomplete(autoCompletedFunction)
+    .setAutocomplete(autoCompletedFunction);
     .setExecute(executeFunction)
 ```
 
@@ -86,6 +87,6 @@ import { Interaction } from '@progressive-victory/client';
 export default new Interaction<ButtonInteraction>()
     .setName(buttonCustomId)
     .setExecute(async (interaction) => {
-    console.log('button has been pressed');
+        logger.info('button has been pressed');
     });
 ```
