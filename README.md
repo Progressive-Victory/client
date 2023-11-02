@@ -45,6 +45,7 @@ async function start() {
 
     await client.deploy();
 };
+
 start();
 ```
 
@@ -57,8 +58,11 @@ Example event for Discord client event `ready`
 import { Events } from 'discord.js';
 import { Event, logger } from '@progressive-victory/client';
 
-export default new Event().setName(Events.ClientReady).setOnce(true).setExecute((client) => {
-    logger.info(`Ready! Logged in as ${client.user.username}`);
+export default new Event()
+    .setName(Events.ClientReady)
+    .setOnce(true)
+    .setExecute((client) => {
+        logger.info(`Ready! Logged in as ${client.user.username}`);
     });
 ```
 
