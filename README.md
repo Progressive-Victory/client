@@ -86,7 +86,7 @@ Interaction objects are a genaric and can be used for any object the following i
 
 ```ts
 import { ButtonInteraction } from 'discord.js';
-import { Interaction } from '@progressive-victory/client';
+import { Interaction, logger } from '@progressive-victory/client';
 
 export default new Interaction<ButtonInteraction>()
     .setName(buttonCustomId)
