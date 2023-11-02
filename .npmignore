@@ -3,3 +3,8 @@ node_modules/
 tslint.json
 .prettierrc
 .swcrc
+.gitignore
+.vscode
+.github
+.eslintrc
+eslintrc.json
