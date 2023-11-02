@@ -73,7 +73,7 @@ export default new ChatInputCommand()
     .setBuilder(commandBuilder)
     .setGlobal(true)
     .setAutocomplete(autoCompletedFunction);
-    .setExecute(executeFunction)
+    .setExecute(executeFunction);
 ```
 
 ### How to create interaction object
