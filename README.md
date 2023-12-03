@@ -11,7 +11,7 @@ npm install @progressive-victory/client
 yarn add @progressive-victory/client
 ```
 
-The client has a builting interation handler. and does not need the `interactionCreate` event to be added. The Client Does **NOT** support refix commands
+The client has a built-in interaction handler. and does not need the `interactionCreate` event to be added. The Client Does **NOT** support refix commands
 
 ## Files setup
 
@@ -68,7 +68,7 @@ export default new Event()
 
 ### How to create command object
 
-Command objects are a genaric and can be used for any object the following is the example of a button interaction. Button interactions should be placed in the Dirctory path set in the `commandPath` or `contextMenuPath`
+Command objects are a generic and can be used for any object the following is the example of a button interaction. Button interactions should be placed in the Directory path set in the `commandPath` or `contextMenuPath`
 
 ```ts
 import { ChatInputCommand } from '@progressive-victory/client';
@@ -82,7 +82,7 @@ export default new ChatInputCommand()
 
 ### How to create interaction object
 
-Interaction objects are a genaric and can be used for any object the following is the example of a button interaction. Button interactions should be placed in the Dirctory path set in the `buttonPath`
+Interaction objects are a generic and can be used for any object the following is the example of a button interaction. Button interactions should be placed in the Directory path set in the `buttonPath`
 
 ```ts
 import { ButtonInteraction } from 'discord.js';
