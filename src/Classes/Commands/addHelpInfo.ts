@@ -1,7 +1,7 @@
 import { Locale } from 'discord.js';
 import {
 	HelpInfoProperties, LocalizedHelpInfo
-} from '../util';
+} from '../../util';
 
 
 /**

@@ -1,4 +1,4 @@
-export { ChatInputCommand, Command, ContextMenuCommand } from './Command';
+export { ChatInputCommand, Command, ContextMenuCommand } from './Commands/Command';
 
 export { Event } from './Event';
 
@@ -9,4 +9,6 @@ export {
 	ExtendedSlashCommandBuilder,
 	ExtendedSlashCommandSubcommandBuilder,
 	ExtendedSlashCommandSubcommandGroupBuilder
-} from './ExtendedCommandBuilders';
+} from './Commands/ExtendedCommandBuilders';
+
+export { ExtendedClient } from './ExtendedClient';

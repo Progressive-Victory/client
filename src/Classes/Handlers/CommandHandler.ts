@@ -1,6 +1,6 @@
 import { AutocompleteInteraction, ChatInputCommandInteraction, Collection, ContextMenuCommandInteraction, REST } from 'discord.js';
 import { logger } from '../..';
-import { ChatInputCommand, ContextMenuCommand } from '../Command';
+import { ChatInputCommand, ContextMenuCommand } from '../Commands/Command';
 import { ExtendedClient } from '../ExtendedClient';
 
 export class CommandHandler {

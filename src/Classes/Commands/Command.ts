@@ -1,11 +1,11 @@
 import {
 	AutocompleteInteraction, ChatInputCommandInteraction, ContextMenuCommandInteraction
 } from 'discord.js';
-import { ExtendedContextMenuCommandBuilder, ExtendedSlashCommandBuilder } from '.';
+import { ExtendedContextMenuCommandBuilder, ExtendedSlashCommandBuilder } from '..';
 import {
 	ChatInputCommandBuilders,
 	ReturnableInteraction
-} from '../util';
+} from '../../util';
 
 /**
  * Slash command or context command
