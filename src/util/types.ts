@@ -12,11 +12,6 @@ import {
 } from '../Classes';
 
 /**
- * Make any opjects readonly properties writeable
- */
-export type Mutable<T> = { -readonly [P in keyof T]: T[P] };
-
-/**
  * Color values that can be referanced
  */
 export declare const ExtraColor: {

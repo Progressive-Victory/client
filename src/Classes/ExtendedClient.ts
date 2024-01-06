@@ -1,18 +1,11 @@
 import {
 	AnySelectMenuInteraction,
-	ApplicationCommand,
 	ButtonInteraction,
 	Client,
 	Collection,
 	Interaction as DInteraction,
-	DiscordjsError,
-	DiscordjsErrorCodes,
 	Events,
-	ModalSubmitInteraction,
-	REST,
-	RESTPatchAPIApplicationCommandJSONBody,
-	Routes,
-	Snowflake
+	ModalSubmitInteraction
 } from 'discord.js';
 import { readdir } from 'fs/promises';
 import { join } from 'path';
@@ -22,34 +15,24 @@ import {
 import { logger } from '..';
 import { onInteractionCreate } from '../interactionCreate';
 import {
-	ExtendedClientOptions, Mutable, TypeCommand, initOptions, tsNodeRun
+	ExtendedClientOptions,
+	TypeCommand, initOptions, tsNodeRun
 } from '../util';
+import { CommandHandler } from './Handlers/CommandHandler';
+import { EventHandler } from './Handlers/EventHandler';
+import { InteractionHandler } from './Handlers/InteractionHandler';
 
 /**
  * ExtendedClient is extended from the {@import ('discord.js').Client}.
  * @see {@link https://discord.js.org/#/docs/main/stable/class/Client}
  */
-export class ExtendedClient extends Client {
-	// REST API
-	readonly rest = new REST({ version: '10' });
+export class ExtendedClient extends Client<true> {
 
-	// Collection of Chat Input Commands
-	readonly commands: Collection<string, ChatInputCommand>;
+	readonly eventHandler = new EventHandler(this);
 
-	// Collection of Context Menu Commands
-	readonly contextMenus: Collection<string, ContextMenuCommand>;
+	readonly commandHandler = new CommandHandler(this);
 
-	// Collection of Events
-	readonly events = new Collection<string, Event>();
-
-	// Collection of Button Interactions
-	readonly buttons: Collection<string, Interaction<ButtonInteraction>>;
-
-	// Collection of Select Menu Interactions
-	readonly selectMenus: Collection<string, Interaction<AnySelectMenuInteraction>>;
-
-	// Collection of Modal Submit Interactions
-	readonly modals: Collection<string, Interaction<ModalSubmitInteraction>>;
+	readonly interactionHandler = new InteractionHandler(this);
 
 	// Whether the bot should responded to buttons or select menus
 	readonly receiveMessageComponents: boolean;
@@ -73,7 +56,11 @@ export class ExtendedClient extends Client {
 	readonly useGuildCommands: boolean;
 
 	// Checks if the init function has run
-	protected hasInitRun = false;
+	private _hasInitRun = false;
+
+	get logedIn() {
+		return this._hasInitRun;
+	}
 
 	/**
 	 *
@@ -100,10 +87,10 @@ export class ExtendedClient extends Client {
 		this.splitCustomIDOn = splitCustomIDOn || '_';
 
 		// Add interaction event listener for built in interaction handler
-		this.on(Events.InteractionCreate, onInteractionCreate);
-
-		// Add the built in interaction handler to the event collection
-		this.events.set(Events.InteractionCreate, new Event({ name: Events.InteractionCreate, execute: onInteractionCreate }));
+		this.eventHandler.add(new Event({
+			name: Events.InteractionCreate,
+			execute: onInteractionCreate
+		}));
 	}
 
 	/**
@@ -125,7 +112,7 @@ export class ExtendedClient extends Client {
 		]);
 
 		// update private init flag
-		this.hasInitRun = true;
+		this._hasInitRun = true;
 
 		logger.debug('Client initialized');
 
@@ -140,86 +127,44 @@ export class ExtendedClient extends Client {
 		for (const file of files) {
 			const event = (await import(join(eventPath, file))).default as Event;
 
-			this.events.set(event.name, event);
-
-			if (event.once) {
-				this.once(event.name, (...args) => event.execute(...args));
-			}
-			else {
-				this.on(event.name, (...args) => event.execute(...args));
-			}
+			this.eventHandler.add(event);
 		}
 
-		const numberOfEvents = this.events.size;
-		logger.info(`Loaded ${this.events.size} events.`);
+		const numberOfEvents = this.eventHandler.size;
+		logger.info(`Loaded ${numberOfEvents} events.`);
 		return numberOfEvents;
-	}
-
-	private clientMutable() {
-		return this as Mutable<ExtendedClient>;
-	}
-
-	private async loadSelectMenus(path?: string) {
-		// Select Menu Handler
-		if (path) {
-			this.clientMutable().selectMenus = await this.fileToCollection<Interaction<AnySelectMenuInteraction>>(path);
-		}
 	}
 
 	private async loadButtons(path?: string) {
 		// Button Handler
 		if (path) {
-			this.clientMutable().buttons = await this.fileToCollection<Interaction<ButtonInteraction>>(path);
+			this.interactionHandler.addButtons(await this.fileToCollection<Interaction<ButtonInteraction>>(path));
 		}
 	}
 
 	private async loadModals(path?: string) {
 		// Modal Handler
 		if (path) {
-			this.clientMutable().modals = await this.fileToCollection<Interaction<ModalSubmitInteraction>>(path);
+			this.interactionHandler.addModals(await this.fileToCollection<Interaction<ModalSubmitInteraction>>(path));
+		}
+	}
+
+	private async loadSelectMenus(path?: string) {
+		// Select Menu Handler
+		if (path) {
+			this.interactionHandler.addSelectMenus(await this.fileToCollection<Interaction<AnySelectMenuInteraction>>(path));
 		}
 	}
 
 	private async loadContextMenus(path?: string) {
 		// Context Menu Handler
 		if (path) {
-			this.clientMutable().contextMenus = await this.fileToCollection<ContextMenuCommand>(path);
+			this.commandHandler.addContextCommands(await this.fileToCollection<ContextMenuCommand>(path));
 		}
 	}
 
 	private async loadCommands(path?: string) {
-		this.clientMutable().commands = await this.fileToCollection<ChatInputCommand>(path);
-	}
-
-	/**
-	 * Deploy Application Commands to Discord
-	 * @param guild If commands deploys subset of commands that should only be deployed to a specific guild
-	 * @see https://discord.com/developers/docs/interactions/application-commands
-	 */
-	public async deploy(guild?: Snowflake) {
-		if (!this.token) {
-			throw new DiscordjsError(DiscordjsErrorCodes.TokenMissing);
-		}
-
-		logger.info('Deploying commands...');
-
-		if (guild === undefined) {
-			// Gets chat commands that are global
-			const globalDeploy: RESTPatchAPIApplicationCommandJSONBody[] = this.commands.filter((f) => f.isGlobal !== false).map((m) => m.builder.toJSON());
-
-			// Gets context menu commands that are global
-			globalDeploy.push(...this.contextMenus.filter((f) => f.isGlobal !== false).map((m) => m.builder.toJSON()));
-
-			// Put the JSON API object to the applicationCommands endpoint
-			const pushedCommands = (await this.rest
-				.put(Routes.applicationCommands(this.user.id), { body: globalDeploy })
-				.catch((e) => logger.error(e))) as ApplicationCommand[];
-
-			logger.info(`Deployed ${pushedCommands.length} global command(s)`);
-		}
-		else if (this.useGuildCommands) {
-			// TODO: Guild Commands Support
-		}
+		this.commandHandler.addChatCommands(await this.fileToCollection<ChatInputCommand>(path));
 	}
 
 	/**
@@ -230,16 +175,13 @@ export class ExtendedClient extends Client {
 	public async login(token?: string) {
 		logger.debug('Start of login called');
 
-		if (!this.hasInitRun) {
+		if (!this._hasInitRun) {
 			throw Error('[ERROR] client.init() has not been completed');
 		}
 
 		if (!token) {
 			throw new Error('[ERROR] Missing token');
 		}
-
-		// Set the REST API with the bot Token
-		this.clientMutable().rest = this.rest.setToken(token);
 
 		logger.debug('Initializing login');
 

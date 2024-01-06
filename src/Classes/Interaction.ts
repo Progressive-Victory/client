@@ -1,18 +1,22 @@
-import { Interaction as DiscordInteraction, PermissionFlags } from 'discord.js';
-import { Mutable } from '../util';
+import { Interaction as DiscordInteraction } from 'discord.js';
 
 /**
  * Interaction object
  */
 export class Interaction<E extends DiscordInteraction> {
 	// Name of Interaction
-	readonly name: string;
-
-	// premitions needed to use interaction
-	readonly permission?: PermissionFlags;
+	private _name: string;
 
 	// Method that to run when interaction happens
-	readonly execute: (interaction: E) => Promise<void>;
+	private _execute: (interaction: E) => Promise<void>;
+
+	get name(){
+		return this._name;
+	}
+
+	get execute() {
+		return this._execute;
+	}
 
 	/**
 	 *
@@ -20,12 +24,8 @@ export class Interaction<E extends DiscordInteraction> {
 	 * @returns
 	 */
 	constructor(options: Partial<Interaction<E>> = {}) {
-		if (options.name) this.name = options.name;
-		if (options.execute) this.execute = options.execute;
-	}
-
-	protected Mutable() {
-		return this as Mutable<typeof this>;
+		if (options.name) this._name = options.name;
+		if (options.execute) this._execute = options.execute;
 	}
 
 	/**
@@ -34,7 +34,7 @@ export class Interaction<E extends DiscordInteraction> {
 	 * @returns The modified object
 	 */
 	public setName(name: string) {
-		this.Mutable().name = name;
+		this._name = name;
 		return this;
 	}
 
@@ -44,7 +44,7 @@ export class Interaction<E extends DiscordInteraction> {
 	 * @returns The modified object
 	 */
 	public setExecute(execute: (interaction: E) => Promise<void>) {
-		this.Mutable().execute = execute;
+		this._execute = execute;
 		return this;
 	}
 }

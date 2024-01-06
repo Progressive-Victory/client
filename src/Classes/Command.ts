@@ -1,9 +1,10 @@
 import {
-	AutocompleteInteraction, ChatInputCommandInteraction, ContextMenuCommandInteraction 
+	AutocompleteInteraction, ChatInputCommandInteraction, ContextMenuCommandInteraction
 } from 'discord.js';
 import { ExtendedContextMenuCommandBuilder, ExtendedSlashCommandBuilder } from '.';
 import {
-	ChatInputCommandBuilders, Mutable, ReturnableInteraction 
+	ChatInputCommandBuilders,
+	ReturnableInteraction
 } from '../util';
 
 /**
@@ -13,28 +14,37 @@ export class Command<
 	TypeBuilder extends ChatInputCommandBuilders | ExtendedContextMenuCommandBuilder,
 	TypeInteraction extends ChatInputCommandInteraction | ContextMenuCommandInteraction
 > {
-	protected Mutable() {
-		return this as Mutable<typeof this>;
-	}
-
 	// The constructor for the registration for the command
-	readonly builder: TypeBuilder;
+	protected _builder: TypeBuilder;
 
 	// State if the command is available in all servers
-	readonly isGlobal: boolean;
+	protected _isGlobal: boolean;
 
 	// Method that is run when command is executed
-	readonly execute: (interaction: TypeInteraction) => Promise<ReturnableInteraction> | ReturnableInteraction;
+	protected _execute: (interaction: TypeInteraction) => Promise<ReturnableInteraction> | ReturnableInteraction;
 
-	/**
-	 *
-	 * @param options
-	 * @returns
-	 */
-	constructor(options: Partial<Command<TypeBuilder, TypeInteraction>> = {}) {
-		this.isGlobal = options.isGlobal === undefined ? true : options.isGlobal;
-		if (options.builder) this.builder = options.builder;
-		if (options.execute) this.execute = options.execute;
+	get isGlobal() {
+		return this._isGlobal;
+	}
+
+	set isGlobal(isGlobal: boolean) {
+		this._isGlobal = isGlobal;
+	}
+
+	get builder() {
+		return this._builder;
+	}
+
+	set builder(builder: TypeBuilder) {
+		this._builder = builder;
+	}
+
+	get execute() {
+		return this._execute;
+	}
+
+	set execute(execute: (interaction: TypeInteraction) => Promise<ReturnableInteraction> | ReturnableInteraction) {
+		this._execute = execute;
 	}
 
 	/**
@@ -42,8 +52,8 @@ export class Command<
 	 * @param isGlobal boolean vaule to be set
 	 * @returns The modified object
 	 */
-	public setGlobal(isGlobal: boolean): this {
-		this.Mutable().isGlobal = isGlobal;
+	setGlobal(isGlobal: boolean): this {
+		this.isGlobal = isGlobal;
 		return this;
 	}
 
@@ -52,9 +62,23 @@ export class Command<
 	 * @param execute function passed in
 	 * @returns The modified object
 	 */
-	public setExecute(execute: (interaction: TypeInteraction) => Promise<ReturnableInteraction> | ReturnableInteraction): this {
-		this.Mutable().execute = execute;
+	setExecute(execute: (interaction: TypeInteraction) => Promise<ReturnableInteraction> | ReturnableInteraction): this {
+		this.execute = execute;
 		return this;
+	}
+
+	toCommandJSON() {
+		return this._builder.toJSON();
+	}
+
+	/**
+	 * 
+	 * @param options 
+	 */
+	constructor(options: Partial<Command<TypeBuilder, TypeInteraction>> = {}) {
+		this.isGlobal = options.isGlobal === undefined ? true : options.isGlobal;
+		if (options.builder) this.builder = options.builder;
+		if (options.execute) this.execute = options.execute;
 	}
 }
 
@@ -62,15 +86,19 @@ export class Command<
  * Slash command
  */
 export class ChatInputCommand extends Command<ChatInputCommandBuilders, ChatInputCommandInteraction> {
+
 	/**
 	 * Runs when client receives and Autocomplete interaction
 	 * @param interaction Autocomplete interaction received by the client
 	 */
-	readonly autocomplete?: (interaction: AutocompleteInteraction) => Promise<void>;
+	protected _autocomplete?: (interaction: AutocompleteInteraction) => Promise<void>;
 
-	constructor(options: Partial<ChatInputCommand> = {}) {
-		super(options);
-		if (options.autocomplete) this.autocomplete = options.autocomplete;
+	get autocomplete() {
+		return this._autocomplete;
+	}
+
+	set autocomplete(autocomplete: (interaction: AutocompleteInteraction) => Promise<void>) {
+		this._autocomplete = autocomplete;
 	}
 
 	/**
@@ -78,12 +106,12 @@ export class ChatInputCommand extends Command<ChatInputCommandBuilders, ChatInpu
 	 * @param input Slah command builder or callback
 	 * @returns The modified object
 	 */
-	public setBuilder(input: ExtendedSlashCommandBuilder | ((subcommandBuilder: ExtendedSlashCommandBuilder) => ChatInputCommandBuilders)): this {
+	setBuilder(input: ExtendedSlashCommandBuilder | ((subcommandBuilder: ExtendedSlashCommandBuilder) => ChatInputCommandBuilders)): this {
 		if (typeof input === 'function') {
-			this.Mutable().builder = input(new ExtendedSlashCommandBuilder());
+			this._builder = input(new ExtendedSlashCommandBuilder());
 		}
 		else {
-			this.Mutable().builder = input;
+			this._builder = input;
 		}
 		return this;
 	}
@@ -94,8 +122,13 @@ export class ChatInputCommand extends Command<ChatInputCommandBuilders, ChatInpu
 	 * @returns The modified object
 	 */
 	public setAutocomplete(autocomplete: (interaction: AutocompleteInteraction) => Promise<void>) {
-		this.Mutable().autocomplete = autocomplete;
+		this._autocomplete = autocomplete;
 		return this;
+	}
+
+	constructor(options: Partial<ChatInputCommand> = {}) {
+		super(options);
+		if (options.autocomplete) this.autocomplete = options.autocomplete;
 	}
 }
 
@@ -109,10 +142,10 @@ export class ContextMenuCommand extends Command<ExtendedContextMenuCommandBuilde
 		input: ExtendedContextMenuCommandBuilder | ((subcommandBuilder: ExtendedContextMenuCommandBuilder) => ExtendedContextMenuCommandBuilder)
 	): this {
 		if (typeof input === 'function') {
-			this.Mutable().builder = input(new ExtendedContextMenuCommandBuilder());
+			this._builder = input(new ExtendedContextMenuCommandBuilder());
 		}
 		else {
-			this.Mutable().builder = input;
+			this._builder = input;
 		}
 		return this;
 	}
