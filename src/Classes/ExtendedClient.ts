@@ -4,7 +4,6 @@ import {
 	Client,
 	Collection,
 	Interaction as DInteraction,
-	Events,
 	ModalSubmitInteraction
 } from 'discord.js';
 import { readdir } from 'fs/promises';
@@ -13,7 +12,7 @@ import {
 	ChatInputCommand, ContextMenuCommand, Event, Interaction
 } from '.';
 import { logger } from '..';
-import { onInteractionCreate } from '../interactionCreate';
+import interactionCreate from '../events/interactionCreate';
 import {
 	ExtendedClientOptions,
 	TypeCommand, initOptions, tsNodeRun
@@ -87,10 +86,7 @@ export class ExtendedClient extends Client<true> {
 		this.splitCustomIDOn = splitCustomIDOn || '_';
 
 		// Add interaction event listener for built in interaction handler
-		this.eventHandler.add(new Event({
-			name: Events.InteractionCreate,
-			execute: onInteractionCreate
-		}));
+		this.eventHandler.add(interactionCreate);
 	}
 
 	/**

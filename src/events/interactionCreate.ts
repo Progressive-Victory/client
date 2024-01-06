@@ -1,7 +1,10 @@
-import { DiscordAPIError, Interaction } from 'discord.js';
-import { logger } from '.';
+import { DiscordAPIError, Events, Interaction } from 'discord.js';
+import { Event, logger } from '..';
+export default new Event()
+	.setName(Events.InteractionCreate)
+	.setExecute(onInteractionCreate);
 
-export async function onInteractionCreate(interaction: Interaction) {
+async function onInteractionCreate(interaction: Interaction) {
 	const { commandHandler, interactionHandler } = interaction.client;
 	try {
 		// Runs if slash commands
