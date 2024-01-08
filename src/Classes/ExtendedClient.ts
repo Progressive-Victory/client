@@ -27,11 +27,11 @@ import { InteractionHandler } from './Handlers/InteractionHandler';
  */
 export class ExtendedClient extends Client<true> {
 
-	private _eventHandler: EventHandler;
+	private _eventHandler = new EventHandler(this);
 
-	private _commandHandler: CommandHandler;
+	private _commandHandler = new CommandHandler(this);
 
-	private _interactionHandler: InteractionHandler;
+	private _interactionHandler = new InteractionHandler(this);
 
 	// Whether the bot should responded to buttons or select menus
 	readonly receiveMessageComponents: boolean;
@@ -62,17 +62,14 @@ export class ExtendedClient extends Client<true> {
 	}
 
 	get eventHandler() {
-		if (!this._hasInitRun) return undefined;
 		return this._eventHandler as Omit<EventHandler,'add'>;
 	}
 
 	get commandHandler() {
-		if (!this._hasInitRun) return undefined;
 		return this._commandHandler as Omit<CommandHandler,'add'| 'addChatCommands'| 'addContextCommands'>;
 	}
 
 	get interactionHandler() {
-		if (!this._hasInitRun) return undefined;
 		return this._interactionHandler as Omit<InteractionHandler, 'addButton' | 'addButtons' | 'addModal' | 'addModals' | 'addSelectMenu' | 'addSelectMenus'>;
 	}
 
@@ -99,6 +96,9 @@ export class ExtendedClient extends Client<true> {
 		this.splitCustomID = splitCustomID === undefined ? false : splitCustomID;
 		this.useGuildCommands = useGuildCommands === undefined ? false : useGuildCommands;
 		this.splitCustomIDOn = splitCustomIDOn || '_';
+		
+		// Add interaction event listener for built in interaction handler
+		this._eventHandler.add(interactionCreate);
 	}
 
 	/**
@@ -108,14 +108,6 @@ export class ExtendedClient extends Client<true> {
 	 */
 	public async init(options: initOptions) {
 		logger.debug('Client initializing...');
-
-		// Start handlers
-		this._eventHandler = new EventHandler(this) ;
-		this._commandHandler = new CommandHandler(this);
-		this._interactionHandler = new InteractionHandler(this);
-
-		// Add interaction event listener for built in interaction handler
-		this._eventHandler.add(interactionCreate);
 
 		// load in dependate event, command and interaction files
 		await Promise.all([
