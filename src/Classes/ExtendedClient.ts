@@ -27,11 +27,11 @@ import { InteractionHandler } from './Handlers/InteractionHandler';
  */
 export class ExtendedClient extends Client<true> {
 
-	readonly eventHandler = new EventHandler(this);
+	private _eventHandler: EventHandler;
 
-	readonly commandHandler = new CommandHandler(this);
+	private _commandHandler: CommandHandler;
 
-	readonly interactionHandler = new InteractionHandler(this);
+	private _interactionHandler: InteractionHandler;
 
 	// Whether the bot should responded to buttons or select menus
 	readonly receiveMessageComponents: boolean;
@@ -61,6 +61,21 @@ export class ExtendedClient extends Client<true> {
 		return this._hasInitRun;
 	}
 
+	get eventHandler() {
+		if (!this._hasInitRun) return undefined;
+		return this._eventHandler as Omit<EventHandler,'add'>;
+	}
+
+	get commandHandler() {
+		if (!this._hasInitRun) return undefined;
+		return this._commandHandler as Omit<CommandHandler,'add'| 'addChatCommands'| 'addContextCommands'>;
+	}
+
+	get interactionHandler() {
+		if (!this._hasInitRun) return undefined;
+		return this._interactionHandler as Omit<InteractionHandler, 'addButton' | 'addButtons' | 'addModal' | 'addModals' | 'addSelectMenu' | 'addSelectMenus'>;
+	}
+
 	/**
 	 *
 	 * @param options Options for the client
@@ -84,9 +99,6 @@ export class ExtendedClient extends Client<true> {
 		this.splitCustomID = splitCustomID === undefined ? false : splitCustomID;
 		this.useGuildCommands = useGuildCommands === undefined ? false : useGuildCommands;
 		this.splitCustomIDOn = splitCustomIDOn || '_';
-
-		// Add interaction event listener for built in interaction handler
-		this.eventHandler.add(interactionCreate);
 	}
 
 	/**
@@ -96,6 +108,14 @@ export class ExtendedClient extends Client<true> {
 	 */
 	public async init(options: initOptions) {
 		logger.debug('Client initializing...');
+
+		// Start handlers
+		this._eventHandler = new EventHandler(this) ;
+		this._commandHandler = new CommandHandler(this);
+		this._interactionHandler = new InteractionHandler(this);
+
+		// Add interaction event listener for built in interaction handler
+		this._eventHandler.add(interactionCreate);
 
 		// load in dependate event, command and interaction files
 		await Promise.all([
@@ -123,10 +143,10 @@ export class ExtendedClient extends Client<true> {
 		for (const file of files) {
 			const event = (await import(join(eventPath, file))).default as Event;
 
-			this.eventHandler.add(event);
+			this._eventHandler.add(event);
 		}
 
-		const numberOfEvents = this.eventHandler.size;
+		const numberOfEvents = this._eventHandler.size;
 		logger.info(`Loaded ${numberOfEvents} events.`);
 		return numberOfEvents;
 	}
@@ -134,33 +154,33 @@ export class ExtendedClient extends Client<true> {
 	private async loadButtons(path?: string) {
 		// Button Handler
 		if (path) {
-			this.interactionHandler.addButtons(await this.fileToCollection<Interaction<ButtonInteraction>>(path));
+			this._interactionHandler.addButtons(await this.fileToCollection<Interaction<ButtonInteraction>>(path));
 		}
 	}
 
 	private async loadModals(path?: string) {
 		// Modal Handler
 		if (path) {
-			this.interactionHandler.addModals(await this.fileToCollection<Interaction<ModalSubmitInteraction>>(path));
+			this._interactionHandler.addModals(await this.fileToCollection<Interaction<ModalSubmitInteraction>>(path));
 		}
 	}
 
 	private async loadSelectMenus(path?: string) {
 		// Select Menu Handler
 		if (path) {
-			this.interactionHandler.addSelectMenus(await this.fileToCollection<Interaction<AnySelectMenuInteraction>>(path));
+			this._interactionHandler.addSelectMenus(await this.fileToCollection<Interaction<AnySelectMenuInteraction>>(path));
 		}
 	}
 
 	private async loadContextMenus(path?: string) {
 		// Context Menu Handler
 		if (path) {
-			this.commandHandler.addContextCommands(await this.fileToCollection<ContextMenuCommand>(path));
+			this._commandHandler.addContextCommands(await this.fileToCollection<ContextMenuCommand>(path));
 		}
 	}
 
 	private async loadCommands(path?: string) {
-		this.commandHandler.addChatCommands(await this.fileToCollection<ChatInputCommand>(path));
+		this._commandHandler.addChatCommands(await this.fileToCollection<ChatInputCommand>(path));
 	}
 
 	/**

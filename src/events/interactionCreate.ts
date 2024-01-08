@@ -1,5 +1,9 @@
-import { DiscordAPIError, Events, Interaction } from 'discord.js';
-import { Event, logger } from '..';
+import {
+	DiscordAPIError, Events, Interaction
+} from 'discord.js';
+import { logger } from '..';
+import { Event } from '../Classes/Event';
+
 export default new Event()
 	.setName(Events.InteractionCreate)
 	.setExecute(onInteractionCreate);

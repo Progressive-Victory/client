@@ -3,6 +3,7 @@ import { Event } from '../Event';
 
 export class EventHandler {
 	private client: Client;
+
 	private events: Collection<string, Event> = new Collection();
 
 	add(event: Event) {

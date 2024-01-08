@@ -6,13 +6,13 @@ import { ClientEvents as DiscordClientEvents } from 'discord.js';
  */
 export class Event {
 	// Name of the Event
-	private _name: keyof DiscordClientEvents;
+	private _name?: keyof DiscordClientEvents;
 
 	// Flag if the event should only run once
 	private _once: boolean;
 
 	// Method to be run when the event occurs
-	private _execute: (...args: any[]) => Promise<void>;
+	private _execute?: (...args: any[]) => Promise<void>;
 
 	get name() {
 		return this._name;

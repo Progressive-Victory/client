@@ -1,12 +1,17 @@
-import { AutocompleteInteraction, ChatInputCommandInteraction, Collection, ContextMenuCommandInteraction, REST } from 'discord.js';
+import {
+	AutocompleteInteraction, ChatInputCommandInteraction, Collection, ContextMenuCommandInteraction, REST
+} from 'discord.js';
 import { logger } from '../..';
 import { ChatInputCommand, ContextMenuCommand } from '../Commands/Command';
 import { ExtendedClient } from '../ExtendedClient';
 
 export class CommandHandler {
 	protected readonly client: ExtendedClient;
+
 	protected readonly rest: REST;
+
 	readonly chatCommands: Collection<string, ChatInputCommand> = new Collection();
+
 	readonly contextCommands: Collection<string, ContextMenuCommand> = new Collection();
 
 	add(command: ChatInputCommand | ContextMenuCommand) {
