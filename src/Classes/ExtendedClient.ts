@@ -1,22 +1,10 @@
-import {
-	AnySelectMenuInteraction,
-	ButtonInteraction,
-	Client,
-	Collection,
-	Interaction as DInteraction,
-	ModalSubmitInteraction
-} from 'discord.js';
+import { AnySelectMenuInteraction, ButtonInteraction, Client, Collection, Interaction as DInteraction, ModalSubmitInteraction } from 'discord.js';
 import { readdir } from 'fs/promises';
 import { join } from 'path';
-import {
-	ChatInputCommand, ContextMenuCommand, Event, Interaction
-} from '.';
+import { ChatInputCommand, ContextMenuCommand, Event, Interaction } from '.';
 import { logger } from '..';
 import interactionCreate from '../events/interactionCreate';
-import {
-	ExtendedClientOptions,
-	TypeCommand, initOptions, tsNodeRun
-} from '../util';
+import { ExtendedClientOptions, TypeCommand, initOptions, tsNodeRun } from '../util';
 import { CommandHandler } from './Handlers/CommandHandler';
 import { EventHandler } from './Handlers/EventHandler';
 import { InteractionHandler } from './Handlers/InteractionHandler';
@@ -62,11 +50,11 @@ export class ExtendedClient extends Client<true> {
 	}
 
 	get eventHandler() {
-		return this._eventHandler as Omit<EventHandler,'add'>;
+		return this._eventHandler as Omit<EventHandler, 'add'>;
 	}
 
 	get commandHandler() {
-		return this._commandHandler as Omit<CommandHandler,'add'| 'addChatCommands'| 'addContextCommands'>;
+		return this._commandHandler as Omit<CommandHandler, 'add'| 'addChatCommands'| 'addContextCommands'>;
 	}
 
 	get interactionHandler() {

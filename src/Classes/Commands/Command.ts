@@ -18,7 +18,7 @@ export class Command<
 	protected _builder: TypeBuilder;
 
 	// State if the command is available in all servers
-	protected _isGlobal: boolean;
+	protected _isGlobal: boolean = true;
 
 	// Method that is run when command is executed
 	protected _execute: (interaction: TypeInteraction) => Promise<ReturnableInteraction> | ReturnableInteraction;
@@ -67,7 +67,7 @@ export class Command<
 		return this;
 	}
 
-	toCommandJSON() {
+	toJSON() {
 		return this._builder.toJSON();
 	}
 
@@ -76,7 +76,7 @@ export class Command<
 	 * @param options 
 	 */
 	constructor(options: Partial<Command<TypeBuilder, TypeInteraction>> = {}) {
-		this.isGlobal = options.isGlobal === undefined ? true : options.isGlobal;
+		if (options.isGlobal) this.isGlobal = options.isGlobal;
 		if (options.builder) this.builder = options.builder;
 		if (options.execute) this.execute = options.execute;
 	}
