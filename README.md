@@ -18,7 +18,6 @@ The client has a builting interation handler. and does not need the `interaction
 Example index.ts for a bot:
 
 ```ts
-import { init } from '@i18n';
 import { Client } from '@progressive-victory/client';
 
 export const client = new Client({
