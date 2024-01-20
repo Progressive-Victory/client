@@ -14,6 +14,6 @@ export {
 
 export { ExtraColor, TimeStyles, tsNodeRun } from './util';
 
-export type { ExtendedClientOptions as ClientOptions, LocalizedHelpInfo, TimeStyle } from './util';
+export type { ChatInputCommandBuilders, ExtendedClientOptions as ClientOptions, LocalizedHelpInfo, ReturnableInteraction, TimeStyle, TypeCommand } from './util';
 
 export const logger = new Logger();
