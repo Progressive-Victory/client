@@ -32,7 +32,7 @@ export type ChatInputCommandBuilders =
 /**
  * Posible interaction return types
  */
-export type ReturnableInteraction = void | CommandInteraction | ContextMenuCommandInteraction | InteractionResponse | Message;
+export type ReturnableInteraction = void | CommandInteraction | ContextMenuCommandInteraction | InteractionResponse<boolean> | Message<boolean>;
 
 /**
  * TypeCommand definition
