@@ -1,7 +1,8 @@
 import Logger from '@progressive-victory/logger';
 
 export {
-	ChatInputCommand, ExtendedClient as Client,
+	ChatInputCommand,
+	ExtendedClient as Client,
 	Command,
 	ContextMenuCommand,
 	Event,

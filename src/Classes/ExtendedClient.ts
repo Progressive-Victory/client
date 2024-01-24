@@ -73,10 +73,16 @@ export class ExtendedClient extends Client<true> {
 
 		// Paths
 		const {
-			receiveMessageComponents, receiveModals, receiveAutocomplete, replyOnError, splitCustomID, splitCustomIDOn, useGuildCommands 
+			receiveMessageComponents,
+			receiveModals,
+			receiveAutocomplete,
+			replyOnError,
+			splitCustomID,
+			splitCustomIDOn,
+			useGuildCommands 
 		} = options;
 
-		// MICS configuration
+		// Misc configuration
 		this.receiveMessageComponents = receiveMessageComponents === undefined ? false : receiveMessageComponents;
 		this.receiveModals = receiveModals === undefined ? false : receiveModals;
 		this.receiveAutocomplete = receiveAutocomplete === undefined ? false : receiveAutocomplete;
