@@ -12,7 +12,7 @@ import {
 } from '../Classes';
 
 /**
- * Color values that can be referanced
+ * Color values that can be referenced
  */
 export declare const ExtraColor: {
 	EmbedGray: 0x2b2d31;
@@ -22,7 +22,7 @@ export declare const ExtraColor: {
 };
 
 /**
- * posible command return types
+ * Possible command return types
  */
 export type ChatInputCommandBuilders =
 	| ExtendedSlashCommandBuilder
@@ -30,7 +30,7 @@ export type ChatInputCommandBuilders =
 	| Omit<ExtendedSlashCommandBuilder, 'addSubcommand' | 'addSubcommandGroup'>;
 
 /**
- * Posible interaction return types
+ * Possible interaction return types
  */
 export type ReturnableInteraction = void | CommandInteraction | ContextMenuCommandInteraction | InteractionResponse<boolean> | Message<boolean>;
 
@@ -58,6 +58,6 @@ export declare const TimeStyles: {
 };
 
 /**
- * LocilzationHelpInfo type
+ * LocalizationHelpInfo type
  */
 export type LocalizedHelpInfo = Partial<Record<LocaleString, string>>;

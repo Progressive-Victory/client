@@ -8,13 +8,13 @@ export { ExtraColor, TimeStyles } from './types';
 
 export type { ExtendedClientOptions, HelpInfoProperties, initOptions } from './interfaces';
 
-// Implimentation of the Date Prototype addtional function of toDiscordString
+// Implementation of the Date Prototype additional function of toDiscordString
 // eslint-disable-next-line func-names
 Date.prototype.toDiscordString = function(this: Date, style?: TimeStyle) {
 	// Round the Number of milliseconds to seconds
 	const code = Math.floor(this.getTime() / 1000);
 
-	// If a style is not present return formated timestamp with out style
+	// If a style is not present return formatted timestamp with out style
 	// Note: This defaults to ShortDate/Time
 	if (!style) return `<t:${code}>`;
 	return `<t:${code}:${style}>`;
@@ -23,7 +23,7 @@ Date.prototype.toDiscordString = function(this: Date, style?: TimeStyle) {
 declare global {
 	interface Date {
 		/**
-		 * Convert Date object to Discord Formated sting
+		 * Convert Date object to Discord Formatted sting
 		 * @param format The Style that will be used on the time stamp
 		 * @see https://discord.com/developers/docs/reference#message-formatting-timestamp-styles
 		 */
