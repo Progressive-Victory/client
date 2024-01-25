@@ -59,9 +59,13 @@
 		"import/prefer-default-export": "off",
 		"import/no-dynamic-require": "off",
 		"import/no-unresolved": "off",
-		"jsx-quotes": [
+		"quotes": [
 			"error",
-			"prefer-single"],
+			"single",
+			{
+				"allowTemplateLiterals": true
+			}
+		],
 		"key-spacing": [
 			"error",
 			{

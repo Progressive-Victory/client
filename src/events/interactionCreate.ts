@@ -3,10 +3,6 @@ import {
 } from 'discord.js';
 import { Event } from '../Classes/Event';
 
-export default new Event()
-	.setName(Events.InteractionCreate)
-	.setExecute(onInteractionCreate);
-
 async function onInteractionCreate(interaction: Interaction) {
 	const { commandHandler, interactionHandler } = interaction.client;
 	try {
@@ -71,3 +67,7 @@ async function onInteractionCreate(interaction: Interaction) {
 		else interaction.client.emit('error', error);
 	}
 }
+
+export default new Event()
+	.setName(Events.InteractionCreate)
+	.setExecute(onInteractionCreate);

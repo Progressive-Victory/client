@@ -1,9 +1,15 @@
-import { AnySelectMenuInteraction, ButtonInteraction, Client, Collection, Interaction as DInteraction, ModalSubmitInteraction } from 'discord.js';
+import {
+	AnySelectMenuInteraction, ButtonInteraction, Client, Collection, Interaction as DInteraction, ModalSubmitInteraction
+} from 'discord.js';
 import { readdir } from 'fs/promises';
 import { join } from 'path';
-import { ChatInputCommand, ContextMenuCommand, Event, Interaction } from '.';
+import {
+	ChatInputCommand, ContextMenuCommand, Event, Interaction
+} from '.';
 import interactionCreate from '../events/interactionCreate';
-import { ExtendedClientOptions, TypeCommand, initOptions, tsNodeRun } from '../util';
+import {
+	ExtendedClientOptions, TypeCommand, initOptions, tsNodeRun
+} from '../util';
 import { CommandHandler } from './Handlers/CommandHandler';
 import { EventHandler } from './Handlers/EventHandler';
 import { InteractionHandler } from './Handlers/InteractionHandler';
@@ -44,7 +50,7 @@ export class ExtendedClient extends Client<true> {
 	// Checks if the init function has run
 	private _hasInitRun = false;
 
-	get logedIn() {
+	get loggedIn() {
 		return this._hasInitRun;
 	}
 
