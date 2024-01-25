@@ -81,7 +81,7 @@ export default new ChatInputCommand()
 
 ### How to create interaction object
 
-Interaction objects are a genaric and can be used for any object the following is the example of a button interaction. Button interactions should be placed in the Dirctory path set in the `buttonPath`
+Interaction objects are a genaric and can be used for any object the following is the example of a button interaction. Button interactions should be placed in the dirctory path set in the `buttonPath`
 
 ```ts
 import { ButtonInteraction } from 'discord.js';

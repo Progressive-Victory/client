@@ -174,7 +174,7 @@ export default {
 
 	// A map from regular expressions to paths to transformers
 	transform: {
-		'^.+\\.tsx?$': ['ts-jest', {
+		'^.+\\.ts?$': ['ts-jest', {
 			isolatedModules: true,
 			tsconfig: 'tsconfig.json'
 		}]
