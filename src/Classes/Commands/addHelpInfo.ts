@@ -1,7 +1,5 @@
 import { Locale } from 'discord.js';
-import {
-	HelpInfoProperties, LocalizedHelpInfo
-} from '../util';
+import { HelpInfoProperties, LocalizedHelpInfo } from '../../util';
 
 
 /**
@@ -9,6 +7,7 @@ import {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor = new (...args: any[]) => object;
+
 /**
  * Add Help infor to an object class
  * @param Base the object beeing extended

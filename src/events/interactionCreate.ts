@@ -1,22 +1,27 @@
-import { DiscordAPIError, Interaction } from 'discord.js';
-import { logger } from '.';
+import {
+	DiscordAPIError, Events, Interaction
+} from 'discord.js';
+import { logger } from '..';
+import { Event } from '../Classes/Event';
 
-export async function onInteractionCreate(interaction: Interaction) {
-	let interactionName: string;
-	const { client } = interaction;
+export default new Event()
+	.setName(Events.InteractionCreate)
+	.setExecute(onInteractionCreate);
 
+async function onInteractionCreate(interaction: Interaction) {
+	const { commandHandler, interactionHandler } = interaction.client;
 	try {
 		// Runs if slash commands
 		if (interaction.isChatInputCommand()) {
-			await client.commands.get(interaction.commandName)?.execute(interaction);
+			await commandHandler.runChatCommand(interaction);
 		}
 		// Runs if context commands
 		else if (interaction.isContextMenuCommand()) {
-			await client.contextMenus.get(interaction.commandName)?.execute(interaction);
+			await commandHandler.runContextCommand(interaction);
 		}
 		// Runs if slash commands option autocomplete
 		else if (interaction.isAutocomplete()) {
-			const autocomplete = client.commands.get(interaction.commandName)?.autocomplete;
+			const autocomplete = commandHandler.chatCommands.get(interaction.commandName)?.autocomplete;
 			if (!autocomplete) {
 				logger.warn(`Autocomplete for ${interaction.commandName} was not Setup`);
 			}
@@ -26,18 +31,15 @@ export async function onInteractionCreate(interaction: Interaction) {
 		}
 		// Runs if select menu
 		else if (interaction.isAnySelectMenu()) {
-			interactionName = client.splitCustomID ? interaction.customId.split(client.splitCustomIDOn)[0] : interaction.customId;
-			await client.selectMenus.get(interactionName)?.execute(interaction);
+			await interactionHandler.runSelectMenus(interaction);
 		}
 		// Runs if button
 		else if (interaction.isButton()) {
-			interactionName = client.splitCustomID ? interaction.customId.split(client.splitCustomIDOn)[0] : interaction.customId;
-			await client.buttons.get(interactionName)?.execute(interaction);
+			await interactionHandler.runButton(interaction);
 		}
 		// Runs if model
 		else if (interaction.isModalSubmit()) {
-			interactionName = client.splitCustomID ? interaction.customId.split(client.splitCustomIDOn)[0] : interaction.customId;
-			await client.modals.get(interactionName)?.execute(interaction);
+			await interactionHandler.runModal(interaction);
 		}
 	}
 	catch (error) {

@@ -12,11 +12,6 @@ import {
 } from '../Classes';
 
 /**
- * Make any opjects readonly properties writeable
- */
-export type Mutable<T> = { -readonly [P in keyof T]: T[P] };
-
-/**
  * Color values that can be referanced
  */
 export declare const ExtraColor: {
@@ -37,7 +32,7 @@ export type ChatInputCommandBuilders =
 /**
  * Posible interaction return types
  */
-export type ReturnableInteraction = void | CommandInteraction | ContextMenuCommandInteraction | InteractionResponse | Message;
+export type ReturnableInteraction = void | CommandInteraction | ContextMenuCommandInteraction | InteractionResponse<boolean> | Message<boolean>;
 
 /**
  * TypeCommand definition
