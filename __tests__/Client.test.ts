@@ -1,4 +1,8 @@
-import { describe, it } from '@jest/globals';
+import {
+	describe,
+	expect,
+	it
+} from '@jest/globals';
 import { join } from 'path';
 
 import { ExtendedClient as Client } from '../src/Classes/ExtendedClient';
@@ -8,7 +12,7 @@ describe('Client', () => {
 		const init = async () => {
 			const client = new Client({ intents: [] });
 			await client.login();
-		}
+		};
 
 		await expect(init()).rejects.toThrow();
 	});
@@ -20,7 +24,7 @@ describe('Client', () => {
 				commandPath: '',
 				eventPath: ''
 			});
-		}
+		};
 
 		await expect(init()).rejects.toThrow();
 	});
@@ -32,7 +36,7 @@ describe('Client', () => {
 				commandPath: join(__dirname, 'empty', 'commands', 'invalid'),
 				eventPath: join(__dirname, 'empty', 'events', 'invalid')
 			});
-		}
+		};
 
 		await expect(init()).rejects.toThrow();
 	});
@@ -44,7 +48,7 @@ describe('Client', () => {
 				commandPath: join(__dirname, 'empty', 'commands'),
 				eventPath: join(__dirname, 'empty', 'events')
 			});
-		}
+		};
 
 		await expect(init()).resolves.not.toThrow();
 	});
@@ -56,7 +60,7 @@ describe('Client', () => {
 				commandPath: join(__dirname, 'valid', 'commands'),
 				eventPath: join(__dirname, 'valid', 'events')
 			});
-		}
+		};
 
 		await expect(init()).resolves.not.toThrow();
 	});
@@ -68,7 +72,7 @@ describe('Client', () => {
 				commandPath: join(__dirname, 'invalid-command', 'commands', 'chat', 'builders'),
 				eventPath: join(__dirname, 'invalid-command', 'events')
 			});
-		}
+		};
 
 		await expect(init()).rejects.toThrow();
 	});
@@ -80,7 +84,7 @@ describe('Client', () => {
 				commandPath: join(__dirname, 'invalid-event', 'commands', 'chat', 'builders'),
 				eventPath: join(__dirname, 'invalid-event', 'events')
 			});
-		}
+		};
 
 		await expect(init()).rejects.toThrow();
 	});
