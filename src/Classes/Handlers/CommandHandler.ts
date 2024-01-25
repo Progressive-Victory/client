@@ -1,6 +1,5 @@
 import { AutocompleteInteraction, ChatInputCommandInteraction, Collection, ContextMenuCommandInteraction, REST } from 'discord.js';
 import assert from 'node:assert/strict';
-import { logger } from '../../../';
 import { ChatInputCommand, ContextMenuCommand } from '../Commands/Command';
 import { ExtendedClient } from '../ExtendedClient';
 
@@ -57,14 +56,14 @@ export class CommandHandler {
 	async register() {
 		if (!this.client.logedIn) throw Error('Client can not register commands before init');
 
-		logger.debug('Deploying commands...');
+		this.client.emit('debug', 'Deploying commands...');
 
 		const commandData = this.chatCommands.filter((f) => f.isGlobal === true).map((m) => m.toJSON())
 			.concat(this.contextCommands.filter((f) => f.isGlobal === true).map((m) => m.toJSON()));
 
 		const sentCommands = await this.client.application.commands.set(commandData);
 
-		logger.info(`Deployed ${sentCommands.size} global command(s)`);
+		this.client.emit('debug', `Deployed ${sentCommands.size} global command(s)`);
 
 		return sentCommands;
 	}

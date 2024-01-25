@@ -2,7 +2,6 @@ import { AnySelectMenuInteraction, ButtonInteraction, Client, Collection, Intera
 import { readdir } from 'fs/promises';
 import { join } from 'path';
 import { ChatInputCommand, ContextMenuCommand, Event, Interaction } from '.';
-import { logger } from '..';
 import interactionCreate from '../events/interactionCreate';
 import { ExtendedClientOptions, TypeCommand, initOptions, tsNodeRun } from '../util';
 import { CommandHandler } from './Handlers/CommandHandler';
@@ -69,7 +68,7 @@ export class ExtendedClient extends Client<true> {
 	constructor(options: ExtendedClientOptions) {
 		super(options);
 
-		logger.info('Client starting up...');
+		this.emit('debug', 'Client starting up...');
 
 		// Paths
 		const {
@@ -101,7 +100,7 @@ export class ExtendedClient extends Client<true> {
 	 * @returns the client object without the init method
 	 */
 	public async init(options: initOptions) {
-		logger.debug('Client initializing...');
+		this.emit('debug', 'Client initializing...');
 
 		// load in dependate event, command and interaction files
 		await Promise.all([
@@ -116,7 +115,7 @@ export class ExtendedClient extends Client<true> {
 		// update private init flag
 		this._hasInitRun = true;
 
-		logger.debug('Client initialized');
+		this.emit('debug', 'Client initialized');
 
 		// return this object with init method omitted
 		return this as Omit<ExtendedClient, 'init'>;
@@ -133,7 +132,7 @@ export class ExtendedClient extends Client<true> {
 		}
 
 		const numberOfEvents = this._eventHandler.size;
-		logger.info(`Loaded ${numberOfEvents} events.`);
+		this.emit('debug', `Loaded ${numberOfEvents} events.`);
 		return numberOfEvents;
 	}
 
@@ -175,7 +174,7 @@ export class ExtendedClient extends Client<true> {
 	 * @returns string response
 	 */
 	public async login(token?: string) {
-		logger.debug('Start of login called');
+		this.emit('debug', 'Start of login called');
 
 		if (!this._hasInitRun) {
 			throw Error('[ERROR] client.init() has not been completed');
@@ -185,7 +184,7 @@ export class ExtendedClient extends Client<true> {
 			throw new Error('[ERROR] Missing token');
 		}
 
-		logger.debug('Initializing login');
+		this.emit('debug', 'Initializing login');
 
 		return super.login(token);
 	}
@@ -245,7 +244,7 @@ export class ExtendedClient extends Client<true> {
 		catch (error) {
 			// catch errors relating to a file destination not existing as they are not fatal to the function of the Client
 			if (this.isErrnoException(error) && error.code === 'ENOENT' && error.syscall === 'scandir') {
-				logger.warn(`Directory not found at ${error.path}`);
+				this.emit('warn', `Directory not found at ${error.path}`);
 			}
 			else {
 				throw error;
@@ -263,32 +262,5 @@ export class ExtendedClient extends Client<true> {
 	// eslint-disable-next-line no-undef
 	private isErrnoException(error: unknown): error is NodeJS.ErrnoException {
 		return error instanceof Error;
-	}
-}
-
-declare module 'discord.js' {
-	interface BaseInteraction {
-		client: ExtendedClient;
-	}
-	interface Component {
-		client: ExtendedClient;
-	}
-	interface Message {
-		client: ExtendedClient;
-	}
-	interface BaseChannel {
-		client: ExtendedClient;
-	}
-	interface Role {
-		client: ExtendedClient;
-	}
-	interface Guild {
-		client: ExtendedClient;
-	}
-	interface User {
-		client: ExtendedClient;
-	}
-	interface GuildMember {
-		client: ExtendedClient;
 	}
 }
