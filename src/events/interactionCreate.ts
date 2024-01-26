@@ -1,12 +1,7 @@
 import {
 	DiscordAPIError, Events, Interaction
 } from 'discord.js';
-import { logger } from '..';
 import { Event } from '../Classes/Event';
-
-export default new Event()
-	.setName(Events.InteractionCreate)
-	.setExecute(onInteractionCreate);
 
 async function onInteractionCreate(interaction: Interaction) {
 	const { commandHandler, interactionHandler } = interaction.client;
@@ -23,7 +18,7 @@ async function onInteractionCreate(interaction: Interaction) {
 		else if (interaction.isAutocomplete()) {
 			const autocomplete = commandHandler.chatCommands.get(interaction.commandName)?.autocomplete;
 			if (!autocomplete) {
-				logger.warn(`Autocomplete for ${interaction.commandName} was not Setup`);
+				interaction.client.emit('warn', `Autocomplete for ${interaction.commandName} was not Setup`);
 			}
 			else {
 				await autocomplete(interaction);
@@ -47,10 +42,11 @@ async function onInteractionCreate(interaction: Interaction) {
 		if (interaction.isRepliable()) {
 			// If the error is from the discord api is is logged
 			if (error instanceof DiscordAPIError) {
-				logger.error(error);
+				interaction.client.emit('error', error);
 			}
 			else if (error instanceof Error) {
-				logger.error(error);
+				interaction.client.emit('error', error);
+
 				// Check if client is set to not send reply on error
 				if (!interaction.client.replyOnError) return;
 
@@ -58,16 +54,20 @@ async function onInteractionCreate(interaction: Interaction) {
 
 				// Check if interaction was deferred
 				if (interaction.deferred) {
-					// If defered interactions is followed up
-					await interaction.followUp({ content: errorMessage, ephemeral: true }).catch((e) => logger.error(e));
+					// If deferred interactions is followed up
+					await interaction.followUp({ content: errorMessage, ephemeral: true }).catch((e) => interaction.client.emit('error', e));
 				}
 				else {
 					// Else the interactions is replied to
-					await interaction.reply({ content: errorMessage, ephemeral: true }).catch((e) => logger.error(e));
+					await interaction.reply({ content: errorMessage, ephemeral: true }).catch((e) => interaction.client.emit('error', e));
 				}
 			}
 		}
 		// If the interaction can not be repliyed to the error is logged
-		else logger.error(error);
+		else interaction.client.emit('error', error);
 	}
 }
+
+export default new Event()
+	.setName(Events.InteractionCreate)
+	.setExecute(onInteractionCreate);

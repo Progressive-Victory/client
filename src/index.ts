@@ -1,5 +1,3 @@
-import Logger from '@progressive-victory/logger';
-
 export {
 	ChatInputCommand,
 	ExtendedClient as Client,
@@ -16,5 +14,3 @@ export {
 export { ExtraColor, TimeStyles, tsNodeRun } from './util';
 
 export type { ChatInputCommandBuilders, ExtendedClientOptions as ClientOptions, LocalizedHelpInfo, ReturnableInteraction, TimeStyle, TypeCommand } from './util';
-
-export const logger = new Logger();
