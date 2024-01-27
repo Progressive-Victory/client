@@ -4,13 +4,37 @@ This folder contains an implementations of [Project Fluent](https://github.com/p
 
 ## How to use
 
-In your main file call the init function.
+Creat the i18n object
+```ts
+import i18n from '@progressive-victory/client';
+const localize = new i18n();
+```
+Then add Locales to the object
+```ts
+import {Locale} from 'discord.js'
+async () => {
+  // Optional add gobal vaules across locals 
+  await localize.setGlobalResource('./Path/Global.ftl')
+  
 
+  await localize.setLocale(./Path/en-US, Locale.EnglishUS)
+}
+```
 ### Translation
+Import localize from where it was created. To trasnlate there are to options:
 
-translation options
+First Full Translation
 
-#### Example
+```ts
+localize.t('key', 'bundlename', Locale.EnglishUS, options)
+```
+
+Staged Translation
+```ts
+const tLocale = localize.getLocale(Locale.EnglishUS)
+tLocale.t('key', 'bundlename', options)
+```
+the option peramiter is for [Variables](https://projectfluent.org/fluent/guide/variables.html)
 
 #### Debugging
 
