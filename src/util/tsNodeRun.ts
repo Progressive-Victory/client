@@ -4,9 +4,9 @@ export let tsNodeRun = false;
 try {
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
-	if (process[Symbol.for('ts-node.register.instance')]) {
+	if (process[Symbol.for('ts-node.register.instance')]) 
 		tsNodeRun = true;
-	}
+	
 }
 catch (e) {
 	/* empty */

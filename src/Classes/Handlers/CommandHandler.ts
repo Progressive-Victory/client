@@ -28,9 +28,9 @@ export class CommandHandler {
 	}
 
 	private validateCommands(commands: Collection<string, ChatInputCommand> | Collection<string, ContextMenuCommand>) {
-		for (const command of commands.values()) {
+		for (const command of commands.values()) 
 			this.validateCommand(command);
-		}
+		
 	}
 
 	add(command: ChatInputCommand | ContextMenuCommand) {
@@ -67,8 +67,6 @@ export class CommandHandler {
 		const sentCommands = await this.client.application.commands.set(commandData);
 
 		this.client.emit('debug', `Deployed ${sentCommands.size} global command(s)`);
-
-		return sentCommands;
 	}
 
 	runChatCommand(interaction: ChatInputCommandInteraction) {

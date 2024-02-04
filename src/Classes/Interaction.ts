@@ -18,11 +18,6 @@ export class Interaction<E extends DiscordInteraction> {
 		return this._execute;
 	}
 
-	/**
-	 *
-	 * @param options
-	 * @returns
-	 */
 	constructor(options: Partial<Interaction<E>> = {}) {
 		if (options.name) this._name = options.name;
 		if (options.execute) this._execute = options.execute;

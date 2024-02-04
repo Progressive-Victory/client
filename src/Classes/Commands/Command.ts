@@ -71,10 +71,6 @@ export class Command<
 		return this._builder.toJSON();
 	}
 
-	/**
-	 * 
-	 * @param options 
-	 */
 	constructor(options: Partial<Command<TypeBuilder, TypeInteraction>> = {}) {
 		if (options.isGlobal) this.isGlobal = options.isGlobal;
 		if (options.builder) this.builder = options.builder;
@@ -107,12 +103,12 @@ export class ChatInputCommand extends Command<ChatInputCommandBuilders, ChatInpu
 	 * @returns The modified object
 	 */
 	setBuilder(input: ExtendedSlashCommandBuilder | ((subcommandBuilder: ExtendedSlashCommandBuilder) => ChatInputCommandBuilders)): this {
-		if (typeof input === 'function') {
+		if (typeof input === 'function') 
 			this._builder = input(new ExtendedSlashCommandBuilder());
-		}
-		else {
+		
+		else 
 			this._builder = input;
-		}
+		
 		return this;
 	}
 
@@ -141,12 +137,12 @@ export class ContextMenuCommand extends Command<ExtendedContextMenuCommandBuilde
 	public setBuilder(
 		input: ExtendedContextMenuCommandBuilder | ((subcommandBuilder: ExtendedContextMenuCommandBuilder) => ExtendedContextMenuCommandBuilder)
 	): this {
-		if (typeof input === 'function') {
+		if (typeof input === 'function') 
 			this._builder = input(new ExtendedContextMenuCommandBuilder());
-		}
-		else {
+		
+		else 
 			this._builder = input;
-		}
+		
 		return this;
 	}
 }

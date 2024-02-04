@@ -1,4 +1,6 @@
-import { AnySelectMenuInteraction, ButtonInteraction, Collection, ModalSubmitInteraction } from 'discord.js';
+import {
+	AnySelectMenuInteraction, ButtonInteraction, Collection, ModalSubmitInteraction
+} from 'discord.js';
 import { ExtendedClient } from '../ExtendedClient';
 import { Interaction } from '../Interaction';
 
