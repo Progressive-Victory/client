@@ -59,7 +59,7 @@ export class ExtendedClient extends Client<true> {
 	}
 
 	get commandHandler() {
-		return this._commandHandler as Omit<CommandHandler, 'add'| 'addChatCommands'| 'addContextCommands'>;
+		return this._commandHandler as Omit<CommandHandler, 'add' | 'addChatCommands' | 'addContextCommands'>;
 	}
 
 	get interactionHandler() {
@@ -144,30 +144,30 @@ export class ExtendedClient extends Client<true> {
 
 	private async loadButtons(path?: string) {
 		// Button Handler
-		if (path) {
+		if (path) 
 			this._interactionHandler.addButtons(await this.fileToCollection<Interaction<ButtonInteraction>>(path));
-		}
+		
 	}
 
 	private async loadModals(path?: string) {
 		// Modal Handler
-		if (path) {
+		if (path) 
 			this._interactionHandler.addModals(await this.fileToCollection<Interaction<ModalSubmitInteraction>>(path));
-		}
+		
 	}
 
 	private async loadSelectMenus(path?: string) {
 		// Select Menu Handler
-		if (path) {
+		if (path) 
 			this._interactionHandler.addSelectMenus(await this.fileToCollection<Interaction<AnySelectMenuInteraction>>(path));
-		}
+		
 	}
 
 	private async loadContextMenus(path?: string) {
 		// Context Menu Handler
-		if (path) {
+		if (path) 
 			this._commandHandler.addContextCommands(await this.fileToCollection<ContextMenuCommand>(path));
-		}
+		
 	}
 
 	private async loadCommands(path?: string) {
@@ -182,13 +182,13 @@ export class ExtendedClient extends Client<true> {
 	public async login(token?: string) {
 		this.emit('debug', 'Start of login called');
 
-		if (!this._hasInitRun) {
+		if (!this._hasInitRun) 
 			throw Error('[ERROR] client.init() has not been completed');
-		}
+		
 
-		if (!token) {
+		if (!token) 
 			throw new Error('[ERROR] Missing token');
-		}
+		
 
 		this.emit('debug', 'Initializing login');
 
@@ -218,9 +218,9 @@ export class ExtendedClient extends Client<true> {
 					('builder' in resp.default !== undefined && (resp.default as TypeCommand).builder?.name) ||
 					(resp.default as Interaction<DInteraction>)?.name;
 
-				if (!name) {
+				if (!name) 
 					throw new Error(`[ERROR] ${file.name} is missing a name`);
-				}
+				
 
 				// Add object to the collection
 				collection.set(name, resp.default);
@@ -249,12 +249,12 @@ export class ExtendedClient extends Client<true> {
 		}
 		catch (error) {
 			// catch errors relating to a file destination not existing as they are not fatal to the function of the Client
-			if (this.isErrnoException(error) && error.code === 'ENOENT' && error.syscall === 'scandir') {
+			if (this.isErrnoException(error) && error.code === 'ENOENT' && error.syscall === 'scandir') 
 				this.emit('warn', `Directory not found at ${error.path}`);
-			}
-			else {
+			
+			else 
 				throw error;
-			}
+			
 		}
 
 		return collection;
