@@ -2,7 +2,7 @@ import { TimeStyle } from './types';
 
 export { tsNodeRun } from './tsNodeRun';
 
-export type { ChatInputCommandBuilders, LocalizedHelpInfo, ReturnableInteraction, TimeStyle, TypeCommand } from './types';
+export type { TimeStyle } from './types';
 
 export { ExtraColor, TimeStyles } from './types';
 
