@@ -1,4 +1,6 @@
-import { Locale, LocaleString } from 'discord.js';
+import {
+	EmojiResolvable, Locale, LocaleString
+} from 'discord.js';
 import { LocalizedHelpInfo, helpInfo } from './types';
 
 export class BaseHelper {
@@ -8,6 +10,8 @@ export class BaseHelper {
 	private _title: string;
 
 	private _description: string;
+
+	private _emoji?: EmojiResolvable;
 
 	/**
 	 * Titles for help Embed
@@ -43,6 +47,14 @@ export class BaseHelper {
 		this._description = description;
 	}
 
+	get emoji() {
+		return this._emoji;
+	}
+
+	private set emoji(input: EmojiResolvable) {
+		this._emoji = input;
+	}
+
 	get titleLocalizations() {
 		return this._titleLocalizations;
 	}
@@ -71,6 +83,11 @@ export class BaseHelper {
 
 	setDescription(description: string) {
 		this.description = description;
+		return this;
+	}
+
+	setEmoji(emoji: EmojiResolvable) {
+		this.emoji = emoji;
 		return this;
 	}
 
