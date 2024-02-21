@@ -8,8 +8,9 @@ import {
 } from '.';
 import interactionCreate from '../events/interactionCreate';
 import {
-	ExtendedClientOptions, TypeCommand, initOptions, tsNodeRun
+	ExtendedClientOptions, initOptions, tsNodeRun
 } from '../util';
+import { TypeCommand } from './Commands';
 import { CommandHandler } from './Handlers/CommandHandler';
 import { EventHandler } from './Handlers/EventHandler';
 import { InteractionHandler } from './Handlers/InteractionHandler';
