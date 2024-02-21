@@ -3,7 +3,7 @@ import {
 	ContextMenuCommandBuilder,
 	ContextMenuCommandInteraction
 } from 'discord.js';
-import { ChatInputCommandBuilders, ReturnableInteraction } from './CommandTypes';
+import { ChatInputCommandBuilders, ReturnableInteraction } from './types';
 
 /**
  * Slash command or context command

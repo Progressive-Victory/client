@@ -1,8 +1,9 @@
 import { ContextMenuCommandBuilder, ContextMenuCommandInteraction } from 'discord.js';
+import { BaseHelper } from '../HelpInfo/BaseHelper';
 import { Command } from './BaseComand';
-import { BaseHelper } from './BaseHelper';
+import { Command as ICommand } from './interfaces';
 
-export class ContextMenuCommand extends Command<ContextMenuCommandBuilder, ContextMenuCommandInteraction> {
+export class ContextMenuCommand extends Command<ContextMenuCommandBuilder, ContextMenuCommandInteraction> implements ICommand {
 
 	private _helpInfo: BaseHelper;
 

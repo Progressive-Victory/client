@@ -3,31 +3,25 @@ import {
 	ChatInputCommandInteraction,
 	SlashCommandBuilder
 } from 'discord.js';
+import { ChatInputHelper } from '../HelpInfo/ChatInputHelper';
 import { Command } from './BaseComand';
-import { ChatInputHelper } from './ChatInputHelper';
-import { ChatInputCommandBuilders } from './CommandTypes';
+import { Command as ICommand } from './interfaces';
+import { ChatInputCommandBuilders } from './types';
 
 /**
  * Slash command
  */
-export class ChatInputCommand extends Command<ChatInputCommandBuilders, ChatInputCommandInteraction> {
+export class ChatInputCommand extends Command<ChatInputCommandBuilders, ChatInputCommandInteraction> implements ICommand {
 
-
+	// Help Info data structure
 	private _helpInfo: ChatInputHelper;
 
-	/**
-	 * Runs when client receives and Autocomplete interaction
-	 * @param interaction Autocomplete interaction received by the client
-	 */
-	protected _autocomplete?: (interaction: AutocompleteInteraction) => Promise<void>;
-	
 	get helpInfo() {
 		return this._helpInfo;
 	}
 
-	private set helpInfo(info: ChatInputHelper) {
-		this._helpInfo = info;
-	}
+	// Autocomplete function
+	protected _autocomplete?: (interaction: AutocompleteInteraction) => Promise<void>;
 
 	get autocomplete() {
 		return this._autocomplete;
@@ -37,11 +31,6 @@ export class ChatInputCommand extends Command<ChatInputCommandBuilders, ChatInpu
 		this._autocomplete = autocomplete;
 	}
 
-	/**
-	 * Set the command builder method
-	 * @param input Slah command builder or callback
-	 * @returns The modified object
-	 */
 	setBuilder(input: SlashCommandBuilder | ((subcommandBuilder: SlashCommandBuilder) => ChatInputCommandBuilders)): this {
 		if (typeof input === 'function') {
 			this._builder = input(new SlashCommandBuilder());
@@ -62,7 +51,7 @@ export class ChatInputCommand extends Command<ChatInputCommandBuilders, ChatInpu
 		return this;
 	}
 
-	setHelpInfo(input: ChatInputHelper | ((helpInfo: ChatInputHelper) => ChatInputHelper)) {
+	setHelpInfo(input: ChatInputHelper | ((helpInfo: ChatInputHelper) => ChatInputHelper)): this {
 		if (typeof input === 'function') {
 			this._helpInfo = input(new ChatInputHelper());
 		}
@@ -75,6 +64,5 @@ export class ChatInputCommand extends Command<ChatInputCommandBuilders, ChatInpu
 	constructor(options: Partial<ChatInputCommand> = {}) {
 		super(options);
 		if (options.autocomplete) this.autocomplete = options.autocomplete;
-		if (options.helpInfo) this.helpInfo = options.helpInfo;
 	}
 }

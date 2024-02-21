@@ -4,5 +4,5 @@ export { ChatInputCommand } from './ChatInputCommand';
 
 export { ContextMenuCommand } from './ContextMenuCommand';
 
-export type { ChatInputCommandBuilders, LocalizedHelpInfo, ReturnableInteraction, TypeCommand, helpInfo } from './CommandTypes';
+export type { ChatInputCommandBuilders, ReturnableInteraction, TypeCommand } from './types';
 

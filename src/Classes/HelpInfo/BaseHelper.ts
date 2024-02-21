@@ -1,5 +1,5 @@
 import { Locale, LocaleString } from 'discord.js';
-import { LocalizedHelpInfo, helpInfo } from './CommandTypes';
+import { LocalizedHelpInfo, helpInfo } from './types';
 
 export class BaseHelper {
 

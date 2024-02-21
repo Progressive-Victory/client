@@ -1,4 +1,6 @@
-import { AnySelectMenuInteraction, ButtonInteraction, Collection, ModalSubmitInteraction } from 'discord.js';
+import {
+	AnySelectMenuInteraction, ButtonInteraction, Collection, ModalSubmitInteraction
+} from 'discord.js';
 import { ExtendedClient } from '../ExtendedClient';
 import { Interaction } from '../Interaction';
 
@@ -6,13 +8,13 @@ export class InteractionHandler {
 	protected readonly client: ExtendedClient;
 
 	// Collection of Button Interactions
-	protected _buttons: Collection<string, Interaction<ButtonInteraction>> = new Collection();
+	protected _buttons = new Collection<string, Interaction<ButtonInteraction>>();
 
 	// Collection of Select Menu Interactions
-	protected _selectMenus: Collection<string, Interaction<AnySelectMenuInteraction>> = new Collection();
+	protected _selectMenus = new Collection<string, Interaction<AnySelectMenuInteraction>>();
 
 	// Collection of Modal Submit Interactions
-	protected _modals: Collection<string, Interaction<ModalSubmitInteraction>> = new Collection();
+	protected _modals = new Collection<string, Interaction<ModalSubmitInteraction>>();
 
 	get buttons() {
 		return this._buttons;

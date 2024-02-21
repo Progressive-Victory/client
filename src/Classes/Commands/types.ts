@@ -2,7 +2,8 @@ import {
 	ChatInputCommandInteraction,
 	CommandInteraction,
 	ContextMenuCommandBuilder,
-	ContextMenuCommandInteraction, InteractionResponse, LocaleString, Message,
+	ContextMenuCommandInteraction, InteractionResponse,
+	Message,
 	SharedSlashCommandOptions,
 	SlashCommandBuilder
 } from 'discord.js';
@@ -25,10 +26,3 @@ export type ReturnableInteraction = void | CommandInteraction | ContextMenuComma
  * TypeCommand definition
  */
 export type TypeCommand = Command<ChatInputCommandBuilders | ContextMenuCommandBuilder, ChatInputCommandInteraction | ContextMenuCommandInteraction>;
-
-/**
- * LocalizationHelpInfo type
- */
-export type LocalizedHelpInfo = Partial<Record<LocaleString, string>>;
-
-export type helpInfo = { title: string; description: string };
