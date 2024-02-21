@@ -3,6 +3,8 @@ import { LocalizedHelpInfo, helpInfo } from './types';
 
 export class BaseHelper {
 
+	private _name: string;
+
 	private _title: string;
 
 	private _description: string;
@@ -16,6 +18,14 @@ export class BaseHelper {
 	 * Descriptions for help Embed
 	 */
 	private _descriptionLocalizations: LocalizedHelpInfo = {};
+
+	get name() {
+		return this._name;
+	}
+
+	private set name(input: string) {
+		this._name = input;
+	}
 
 	get title() {
 		return this._title;
@@ -49,6 +59,10 @@ export class BaseHelper {
 		this._descriptionLocalizations = helpDescriptions;
 	}
 
+	setName(name: string) {
+		this.name=name;
+		return this;
+	}
 
 	setTitle(title: string) {
 		this.title = title;
