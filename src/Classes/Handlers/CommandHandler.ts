@@ -1,19 +1,17 @@
 import {
-	AutocompleteInteraction, ChatInputCommandInteraction, Collection, ContextMenuCommandInteraction, REST
+	AutocompleteInteraction, ChatInputCommandInteraction, Collection, ContextMenuCommandInteraction
 } from 'discord.js';
 import assert from 'node:assert/strict';
-import { ChatInputCommand, ContextMenuCommand } from '../Commands/Command';
+import { ChatInputCommand, ContextMenuCommand } from '../Commands';
 import { ExtendedClient } from '../ExtendedClient';
 
 
 export class CommandHandler {
 	protected readonly client: ExtendedClient;
 
-	protected readonly rest: REST;
+	protected _chatCommands = new Collection<string, ChatInputCommand>();
 
-	protected _chatCommands: Collection<string, ChatInputCommand> = new Collection();
-
-	protected _contextCommands: Collection<string, ContextMenuCommand> = new Collection();
+	protected _contextCommands = new Collection<string, ContextMenuCommand>();
 
 	get contextCommands() {
 		return this._contextCommands;
@@ -25,6 +23,7 @@ export class CommandHandler {
 
 	private validateCommand(command: ChatInputCommand | ContextMenuCommand) {
 		assert(typeof command.execute !== 'undefined');
+		assert(typeof command.builder !== 'undefined');
 	}
 
 	private validateCommands(commands: Collection<string, ChatInputCommand> | Collection<string, ContextMenuCommand>) {
@@ -85,6 +84,5 @@ export class CommandHandler {
 
 	constructor(client: ExtendedClient) {
 		this.client = client;
-		this.rest = client.rest;
 	}
 }

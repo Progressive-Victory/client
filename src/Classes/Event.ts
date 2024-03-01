@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ClientEvents as DiscordClientEvents } from 'discord.js';
+import { ClientEvents } from 'discord.js';
 
 /**
  * Event Class
  */
 export class Event {
 	// Name of the Event
-	private _name?: keyof DiscordClientEvents;
+	private _name?: keyof ClientEvents;
 
 	// Flag if the event should only run once
 	private _once: boolean;
@@ -47,7 +47,7 @@ export class Event {
 	 * @param input value to set
 	 * @returns The modified object
 	 */
-	public setName(input: keyof DiscordClientEvents) {
+	public setName(input: keyof ClientEvents) {
 		this._name = input;
 		return this;
 	}
