@@ -1,10 +1,15 @@
 export {
+	BaseHelper,
 	ChatInputCommand,
+	ChatInputHelper,
 	ExtendedClient as Client,
 	Command,
 	ContextMenuCommand,
 	Event,
-	Interaction
+	Interaction,
+	LocalizedHelpInfo,
+	SubcommandHelper,
+	helpInfo
 } from './Classes';
 
 export { ExtraColor, TimeStyles, tsNodeRun } from './util';
