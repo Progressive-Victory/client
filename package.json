@@ -32,6 +32,8 @@
 	"devDependencies": {
 		"@jest/globals": "^29.7.0",
 		"@stylistic/eslint-plugin": "^1.5.4",
+		"@swc/cli": "^0.3.10",
+		"@swc/core": "^1.4.2",
 		"@types/jest": "^29.5.11",
 		"@typescript-eslint/eslint-plugin": "^6.7.5",
 		"@typescript-eslint/parser": "^6.7.5",
