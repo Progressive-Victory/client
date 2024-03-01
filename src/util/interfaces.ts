@@ -1,5 +1,5 @@
 import { ClientOptions, Locale } from 'discord.js';
-import { LocalizedHelpInfo } from './types';
+import { LocalizedHelpInfo } from '../Classes';
 
 export interface ExtendedClientOptions extends ClientOptions {
 	receiveMessageComponents?: boolean;
