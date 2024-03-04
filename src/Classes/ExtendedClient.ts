@@ -209,7 +209,7 @@ export class ExtendedClient extends Client<true> {
 				const resp: { default: Type } = await import(join(dirPath, file.name));
 
 				// Get name of file
-				const name =					('builder' in resp.default !== undefined && (resp.default as TypeCommand).builder?.name)
+				const name = ('builder' in resp.default && resp.default.builder?.name)
 					|| (resp.default as Interaction<DInteraction>)?.name;
 
 				if (!name) {
@@ -224,7 +224,7 @@ export class ExtendedClient extends Client<true> {
 			for (const dir of dirents.filter((dirent) => dirent.isDirectory())) {
 				// Get the complete filepath
 				const directoryPath = join(dirPath, dir.name);
-				// Get subfolder contects
+				// Get subfolder contents
 				const dirFiles = await readdir(directoryPath);
 
 				// For Each file in the Array of Directory entities where the file ends in ts or js based on the environment
@@ -233,7 +233,7 @@ export class ExtendedClient extends Client<true> {
 					const resp: { default: Type } = await import(join(directoryPath, file));
 
 					// Get name of file
-					const name =						'builder' in resp.default !== undefined ? (resp.default as TypeCommand).builder.name : (resp.default as Interaction<DInteraction>).name;
+					const name = 'builder' in resp.default ? resp.default.builder.name : resp.default.name;
 
 					// Add object to the collection
 					collection.set(name, resp.default);
