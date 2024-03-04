@@ -10,7 +10,7 @@ export class Interaction<E extends DiscordInteraction> {
 	// Method that to run when interaction happens
 	private _execute: (interaction: E) => Promise<void>;
 
-	get name(){
+	get name() {
 		return this._name;
 	}
 

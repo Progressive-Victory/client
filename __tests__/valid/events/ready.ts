@@ -1,7 +1,7 @@
 import { Events } from 'discord.js';
-import { Client, Event } from '../../../src';
+import { Event } from '../../../src';
 
-async function onReady(client: Client) {
+async function onReady() {
 	// Noop
 }
 

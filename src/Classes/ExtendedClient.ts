@@ -20,7 +20,6 @@ import { InteractionHandler } from './Handlers/InteractionHandler';
  * @see {@link https://discord.js.org/#/docs/main/stable/class/Client}
  */
 export class ExtendedClient extends Client<true> {
-
 	private _eventHandler = new EventHandler(this);
 
 	private _commandHandler = new CommandHandler(this);
@@ -60,7 +59,7 @@ export class ExtendedClient extends Client<true> {
 	}
 
 	get commandHandler() {
-		return this._commandHandler as Omit<CommandHandler, 'add'| 'addChatCommands'| 'addContextCommands'>;
+		return this._commandHandler as Omit<CommandHandler, 'add' | 'addChatCommands' | 'addContextCommands'>;
 	}
 
 	get interactionHandler() {
@@ -79,13 +78,7 @@ export class ExtendedClient extends Client<true> {
 
 		// Paths
 		const {
-			receiveMessageComponents,
-			receiveModals,
-			receiveAutocomplete,
-			replyOnError,
-			splitCustomID,
-			splitCustomIDOn,
-			useGuildCommands 
+			receiveMessageComponents, receiveModals, receiveAutocomplete, replyOnError, splitCustomID, splitCustomIDOn, useGuildCommands
 		} = options;
 
 		// Misc configuration
@@ -96,7 +89,7 @@ export class ExtendedClient extends Client<true> {
 		this.splitCustomID = splitCustomID === undefined ? false : splitCustomID;
 		this.useGuildCommands = useGuildCommands === undefined ? false : useGuildCommands;
 		this.splitCustomIDOn = splitCustomIDOn || '_';
-		
+
 		// Add interaction event listener for built in interaction handler
 		this._eventHandler.add(interactionCreate);
 	}
@@ -109,15 +102,16 @@ export class ExtendedClient extends Client<true> {
 	public async init(options: initOptions) {
 		this.emit('debug', 'Client initializing...');
 
-		// load in dependate event, command and interaction files
+		// load in dependant event, command and interaction files
 		await Promise.all([
-			this.loadEvents(options.eventPath),
 			this.loadCommands(options.commandPath),
 			this.loadContextMenus(options.contextMenuPath),
 			this.loadButtons(options.buttonPath),
 			this.loadSelectMenus(options.selectMenuPath),
 			this.loadModals(options.modalPath)
 		]);
+
+		await this.loadEvents(options.eventPath);
 
 		// update private init flag
 		this._hasInitRun = true;
@@ -215,9 +209,8 @@ export class ExtendedClient extends Client<true> {
 				const resp: { default: Type } = await import(join(dirPath, file.name));
 
 				// Get name of file
-				const name =
-					('builder' in resp.default !== undefined && (resp.default as TypeCommand).builder?.name) ||
-					(resp.default as Interaction<DInteraction>)?.name;
+				const name =					('builder' in resp.default !== undefined && (resp.default as TypeCommand).builder?.name)
+					|| (resp.default as Interaction<DInteraction>)?.name;
 
 				if (!name) {
 					throw new Error(`[ERROR] ${file.name} is missing a name`);
@@ -240,8 +233,7 @@ export class ExtendedClient extends Client<true> {
 					const resp: { default: Type } = await import(join(directoryPath, file));
 
 					// Get name of file
-					const name =
-						'builder' in resp.default !== undefined ? (resp.default as TypeCommand).builder.name : (resp.default as Interaction<DInteraction>).name;
+					const name =						'builder' in resp.default !== undefined ? (resp.default as TypeCommand).builder.name : (resp.default as Interaction<DInteraction>).name;
 
 					// Add object to the collection
 					collection.set(name, resp.default);

@@ -1,7 +1,5 @@
 import {
-	describe,
-	expect,
-	it
+	describe, expect, it
 } from '@jest/globals';
 import { join } from 'path';
 

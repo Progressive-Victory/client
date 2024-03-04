@@ -1,10 +1,9 @@
 import { ContextMenuCommandBuilder, ContextMenuCommandInteraction } from 'discord.js';
 import { BaseHelper } from '../HelpInfo/BaseHelper';
-import { Command } from './BaseComand';
+import { Command } from './BaseCommand';
 import { Command as ICommand } from './interfaces';
 
 export class ContextMenuCommand extends Command<ContextMenuCommandBuilder, ContextMenuCommandInteraction> implements ICommand {
-
 	private _helpInfo: BaseHelper;
 
 	get helpInfo() {
@@ -20,9 +19,7 @@ export class ContextMenuCommand extends Command<ContextMenuCommandBuilder, Conte
 	 * @param input Context Menu command builder or callback
 	 * @returns The modified object
 	 */
-	setBuilder(
-		input: ContextMenuCommandBuilder | ((subcommandBuilder: ContextMenuCommandBuilder) => ContextMenuCommandBuilder)
-	): this {
+	setBuilder(input: ContextMenuCommandBuilder | ((subcommandBuilder: ContextMenuCommandBuilder) => ContextMenuCommandBuilder)): this {
 		if (typeof input === 'function') {
 			this._builder = input(new ContextMenuCommandBuilder());
 		}
@@ -41,5 +38,4 @@ export class ContextMenuCommand extends Command<ContextMenuCommandBuilder, Conte
 		}
 		return this;
 	}
-
 }

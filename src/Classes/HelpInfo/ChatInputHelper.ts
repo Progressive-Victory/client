@@ -1,7 +1,6 @@
 import { SubcommandHelper } from './SubcommandHelper';
 
 export class ChatInputHelper extends SubcommandHelper {
-
 	subcomandGroups: SubcommandHelper[];
 
 	addSubcomandGroup(helpInfo: SubcommandHelper) {

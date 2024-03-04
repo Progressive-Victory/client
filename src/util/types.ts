@@ -1,4 +1,3 @@
-
 /**
  * Color values that can be referenced
  */

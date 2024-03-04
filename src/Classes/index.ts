@@ -9,4 +9,3 @@ export { ExtendedClient } from './ExtendedClient';
 export type { LocalizedHelpInfo, helpInfo } from './HelpInfo';
 
 export { BaseHelper, ChatInputHelper, SubcommandHelper } from './HelpInfo';
-

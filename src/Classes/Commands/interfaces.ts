@@ -1,47 +1,46 @@
 import {
-	ChatInputCommandInteraction, ContextMenuCommandBuilder, ContextMenuCommandInteraction,
-	SlashCommandBuilder
+	ChatInputCommandInteraction, ContextMenuCommandBuilder, ContextMenuCommandInteraction, SlashCommandBuilder
 } from 'discord.js';
 import { BaseHelper } from '../HelpInfo/BaseHelper';
 import { ChatInputHelper } from '../HelpInfo/ChatInputHelper';
 import { ChatInputCommandBuilders, ReturnableInteraction } from './types';
 
 export interface Command {
+	isGlobal: boolean;
 
-	isGlobal: boolean
+	builder: ChatInputCommandBuilders | ContextMenuCommandBuilder;
 
-	builder: ChatInputCommandBuilders | ContextMenuCommandBuilder
+	execute: (interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction) => Promise<ReturnableInteraction> | ReturnableInteraction;
 
-	execute: (interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction) => Promise<ReturnableInteraction> | ReturnableInteraction
-
-	helpInfo: BaseHelper | ChatInputHelper
+	helpInfo: BaseHelper | ChatInputHelper;
 
 	/**
 	 * Set the isGlobal Value
 	 * @param isGlobal boolean vaule to be set
 	 * @returns The modified object
 	 */
-	setGlobal(isGlobal: boolean): this
+	setGlobal(isGlobal: boolean): this;
 
 	/**
 	 * Set the command builder method
 	 * @param input The command Builder or a callback function
 	 * @returns The modified object
 	 */
-	setBuilder(input: SlashCommandBuilder | ContextMenuCommandBuilder 
-		| ((subcommandBuilder: SlashCommandBuilder) => ChatInputCommandBuilders) 
-		| ((subcommandBuilder: ContextMenuCommandBuilder) => ContextMenuCommandBuilder)): this
+	setBuilder(
+		input:
+			| SlashCommandBuilder
+			| ContextMenuCommandBuilder
+			| ((subcommandBuilder: SlashCommandBuilder) => ChatInputCommandBuilders)
+			| ((subcommandBuilder: ContextMenuCommandBuilder) => ContextMenuCommandBuilder)
+	): this;
 
-	setExecute(execute: (interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction) => 
-		Promise<ReturnableInteraction> | ReturnableInteraction): this
+	setExecute(
+		execute: (interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction) => Promise<ReturnableInteraction> | ReturnableInteraction
+	): this;
 	/**
 	 * Set Help Info
 	 * @param input help info object
 	 * @returns The updated object
 	 */
-	setHelpInfo(input: ChatInputHelper 
-		| BaseHelper
-		| ((helpInfo: ChatInputHelper) => ChatInputHelper)
-		| ((helpInfo: BaseHelper) => BaseHelper)
-		): this
+	setHelpInfo(input: ChatInputHelper | BaseHelper | ((helpInfo: ChatInputHelper) => ChatInputHelper) | ((helpInfo: BaseHelper) => BaseHelper)): this;
 }

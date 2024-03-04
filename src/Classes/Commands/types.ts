@@ -2,12 +2,13 @@ import {
 	ChatInputCommandInteraction,
 	CommandInteraction,
 	ContextMenuCommandBuilder,
-	ContextMenuCommandInteraction, InteractionResponse,
+	ContextMenuCommandInteraction,
+	InteractionResponse,
 	Message,
 	SharedSlashCommandOptions,
 	SlashCommandBuilder
 } from 'discord.js';
-import { Command } from './BaseComand';
+import { Command } from './BaseCommand';
 
 /**
  * Possible command return types
