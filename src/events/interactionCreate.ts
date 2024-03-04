@@ -68,6 +68,4 @@ async function onInteractionCreate(interaction: Interaction) {
 	}
 }
 
-export default new Event()
-	.setName(Events.InteractionCreate)
-	.setExecute(onInteractionCreate);
+export default new Event().setName(Events.InteractionCreate).setExecute(onInteractionCreate);

@@ -4,7 +4,6 @@ import {
 import { LocalizedHelpInfo, helpInfo } from './types';
 
 export class BaseHelper {
-
 	private _name: string;
 
 	private _title: string;
@@ -72,7 +71,7 @@ export class BaseHelper {
 	}
 
 	setName(name: string) {
-		this.name=name;
+		this.name = name;
 		return this;
 	}
 
@@ -112,7 +111,6 @@ export class BaseHelper {
 	}
 
 	getInfo(locale: Locale): helpInfo {
-
 		const obj: helpInfo = {
 			title: this.titleLocalizations[locale],
 			description: this.descriptionLocalizations[locale]
@@ -123,7 +121,4 @@ export class BaseHelper {
 
 		return obj;
 	}
-
-	// constructor(options: Partial<Helper>) {
-	// }
 }

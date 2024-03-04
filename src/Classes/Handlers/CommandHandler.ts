@@ -5,7 +5,6 @@ import assert from 'node:assert/strict';
 import { ChatInputCommand, ContextMenuCommand } from '../Commands';
 import { ExtendedClient } from '../ExtendedClient';
 
-
 export class CommandHandler {
 	protected readonly client: ExtendedClient;
 
@@ -60,7 +59,9 @@ export class CommandHandler {
 
 		this.client.emit('debug', 'Deploying commands...');
 
-		const commandData = this.chatCommands.filter((f) => f.isGlobal === true).map((m) => m.toJSON())
+		const commandData = this.chatCommands
+			.filter((f) => f.isGlobal === true)
+			.map((m) => m.toJSON())
 			.concat(this.contextCommands.filter((f) => f.isGlobal === true).map((m) => m.toJSON()));
 
 		const sentCommands = await this.client.application.commands.set(commandData);

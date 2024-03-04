@@ -1,10 +1,8 @@
 import {
-	AutocompleteInteraction,
-	ChatInputCommandInteraction,
-	SlashCommandBuilder
+	AutocompleteInteraction, ChatInputCommandInteraction, SlashCommandBuilder
 } from 'discord.js';
 import { ChatInputHelper } from '../HelpInfo/ChatInputHelper';
-import { Command } from './BaseComand';
+import { Command } from './BaseCommand';
 import { Command as ICommand } from './interfaces';
 import { ChatInputCommandBuilders } from './types';
 
@@ -12,7 +10,6 @@ import { ChatInputCommandBuilders } from './types';
  * Slash command
  */
 export class ChatInputCommand extends Command<ChatInputCommandBuilders, ChatInputCommandInteraction> implements ICommand {
-
 	// Help Info data structure
 	private _helpInfo: ChatInputHelper;
 

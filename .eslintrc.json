@@ -4,22 +4,14 @@
 		"es2020": true,
 		"browser": true
 	},
-	"extends": [
-		"eslint:recommended",
-		"plugin:@typescript-eslint/recommended",
-		"airbnb-base",
-		"prettier"
-	],
+	"extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "airbnb-base"],
 	"ignorePatterns": ["**/dist/*"],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"ecmaVersion": 8,
 		"requireConfigFile": false
 	},
-	"plugins": [
-		"@typescript-eslint",
-		"@stylistic/eslint-plugin"
-	],
+	"plugins": ["@typescript-eslint", "@stylistic/eslint-plugin"],
 	"root": true,
 	"rules": {
 		"@typescript-eslint/no-non-null-assertion": "off",
@@ -38,23 +30,12 @@
 			}
 		],
 		"block-spacing": "error",
-		"brace-style": [
-			"error",
-			"stroustrup"
-		],
+		"brace-style": ["error", "stroustrup"],
 		"class-methods-use-this": 0,
-		"comma-dangle": [
-			"error",
-			"never"
-		],
-		"curly": [
-			"error",
-			"multi-line"
-		],
+		"comma-dangle": ["error", "never"],
+		"curly": ["error", "multi-line"],
 		"global-require": "off",
-		"indent": [
-			"error", "tab"
-		],
+		"indent": ["error", "tab"],
 		"import/extensions": "off",
 		"import/prefer-default-export": "off",
 		"import/no-dynamic-require": "off",
@@ -74,10 +55,7 @@
 				"mode": "strict"
 			}
 		],
-		"linebreak-style": [
-			"error",
-			"unix"
-		],
+		"linebreak-style": ["error", "unix"],
 		"max-classes-per-file": "off",
 		"max-len": [
 			"error",
@@ -110,10 +88,11 @@
 				"prev": "*",
 				"next": "function"
 			},
-			{ 
+			{
 				"blankLine": "always",
 				"prev": "*",
-				"next": "export" }
+				"next": "export"
+			}
 		],
 		"object-curly-newline": [
 			"error",
@@ -135,14 +114,8 @@
 				}
 			}
 		],
-		"object-curly-spacing": [
-			"error",
-			"always"
-		],
-		"semi": [
-			"error",
-			"always"
-		],
+		"object-curly-spacing": ["error", "always"],
+		"semi": ["error", "always"],
 		"space-before-function-paren": [
 			"error",
 			{

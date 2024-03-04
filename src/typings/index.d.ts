@@ -28,7 +28,7 @@ declare module 'discord.js' {
 	interface User {
 		client: ExtendedClient;
 	}
-	
+
 	interface GuildMember {
 		client: ExtendedClient;
 	}

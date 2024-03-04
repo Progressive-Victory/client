@@ -1,8 +1,7 @@
 import {
-	describe,
-	expect,
-	it
+	describe, expect, it
 } from '@jest/globals';
+import { readdir } from 'fs/promises';
 import { join } from 'path';
 
 import { ExtendedClient as Client } from '../src/Classes/ExtendedClient';
@@ -63,6 +62,26 @@ describe('Client', () => {
 		};
 
 		await expect(init()).resolves.not.toThrow();
+	});
+
+	it('Should load with the correct number of events', async () => {
+		let client: Client | null = null;
+		const eventPath = join(__dirname, 'valid', 'events');
+
+		const init = async () => {
+			client = new Client({ intents: [] });
+			await client.init({
+				commandPath: join(__dirname, 'valid', 'commands'),
+				eventPath
+			});
+		};
+
+		await expect(init()).resolves.not.toThrow();
+
+		const eventFiles = await readdir(eventPath);
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		expect((client as any)!._eventHandler.size).toBe(eventFiles.length + 1); // "interactionCreate" event is always added
 	});
 
 	it('Should throw if command builder doesn\'t come with an execute handler', async () => {

@@ -51,9 +51,7 @@ export default {
 	// errorOnDeprecated: false,
 
 	// The default configuration for fake timers
-	// fakeTimers: {
-	//   "enableGlobally": false
-	// },
+	fakeTimers: { enableGlobally: true },
 
 	// Force coverage collection from ignored files using an array of glob patterns
 	// forceCoverageMatch: [],
@@ -88,9 +86,7 @@ export default {
 	// ],
 
 	// A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-	moduleNameMapper: {
-		'^@/(.*)$': '<rootDir>/src/$1'
-	},
+	moduleNameMapper: { '^@/(.*)$': '<rootDir>/src/$1' },
 
 	// An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
 	// modulePathIgnorePatterns: [],
@@ -155,13 +151,10 @@ export default {
 	// testLocationInResults: false,
 
 	// The glob patterns Jest uses to detect test files
-	testMatch: ["**/*.test.ts"],
+	testMatch: ['**/*.test.ts'],
 
 	// An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-	testPathIgnorePatterns: [
-		'/node_modules/',
-		'/dist/'
-	],
+	testPathIgnorePatterns: ['/node_modules/', '/dist/'],
 
 	// The regexp pattern or array of patterns that Jest uses to detect test files
 	// testRegex: [],
@@ -174,10 +167,13 @@ export default {
 
 	// A map from regular expressions to paths to transformers
 	transform: {
-		'^.+\\.ts?$': ['ts-jest', {
-			isolatedModules: true,
-			tsconfig: 'tsconfig.json'
-		}]
+		'^.+\\.ts?$': [
+			'ts-jest',
+			{
+				isolatedModules: true,
+				tsconfig: 'tsconfig.json'
+			}
+		]
 	},
 
 	// An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation

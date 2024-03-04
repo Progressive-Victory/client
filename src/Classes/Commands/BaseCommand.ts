@@ -1,7 +1,5 @@
 import {
-	ChatInputCommandInteraction,
-	ContextMenuCommandBuilder,
-	ContextMenuCommandInteraction
+	ChatInputCommandInteraction, ContextMenuCommandBuilder, ContextMenuCommandInteraction
 } from 'discord.js';
 import { ChatInputCommandBuilders, ReturnableInteraction } from './types';
 
@@ -47,7 +45,7 @@ export class Command<
 
 	/**
 	 * Set the isGlobal Value
-	 * @param isGlobal boolean vaule to be set
+	 * @param isGlobal boolean value to be set
 	 * @returns The modified object
 	 */
 	setGlobal(isGlobal: boolean): this {
@@ -70,8 +68,8 @@ export class Command<
 	}
 
 	/**
-	 * 
-	 * @param options 
+	 *
+	 * @param options
 	 */
 	constructor(options: Partial<Command<TypeBuilder, TypeInteraction>> = {}) {
 		if (options.isGlobal) this.isGlobal = options.isGlobal;
