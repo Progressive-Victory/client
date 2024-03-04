@@ -209,8 +209,7 @@ export class ExtendedClient extends Client<true> {
 				const resp: { default: Type } = await import(join(dirPath, file.name));
 
 				// Get name of file
-				const name = ('builder' in resp.default && resp.default.builder?.name)
-					|| (resp.default as Interaction<DInteraction>)?.name;
+				const name = ('builder' in resp.default && resp.default.builder?.name) || (resp.default as Interaction<DInteraction>)?.name;
 
 				if (!name) {
 					throw new Error(`[ERROR] ${file.name} is missing a name`);
