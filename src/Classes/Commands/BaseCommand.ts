@@ -1,7 +1,7 @@
 import {
 	ChatInputCommandInteraction, ContextMenuCommandBuilder, ContextMenuCommandInteraction
 } from 'discord.js';
-import { ChatInputCommandBuilders, ReturnableInteraction } from './types';
+import { ChatInputCommandBuilders } from './types';
 
 /**
  * Slash command or context command
@@ -17,7 +17,7 @@ export class Command<
 	protected _isGlobal: boolean = true;
 
 	// Method that is run when command is executed
-	protected _execute: (interaction: TypeInteraction) => Promise<ReturnableInteraction> | ReturnableInteraction;
+	protected _execute: (interaction: TypeInteraction) => Promise<void>;
 
 	get isGlobal() {
 		return this._isGlobal;
@@ -39,7 +39,7 @@ export class Command<
 		return this._execute;
 	}
 
-	private set execute(execute: (interaction: TypeInteraction) => Promise<ReturnableInteraction> | ReturnableInteraction) {
+	private set execute(execute: (interaction: TypeInteraction) => Promise<void>) {
 		this._execute = execute;
 	}
 
@@ -58,7 +58,7 @@ export class Command<
 	 * @param execute function passed in
 	 * @returns The modified object
 	 */
-	setExecute(execute: (interaction: TypeInteraction) => Promise<ReturnableInteraction> | ReturnableInteraction): this {
+	setExecute(execute: (interaction: TypeInteraction) => Promise<void>): this {
 		this.execute = execute;
 		return this;
 	}

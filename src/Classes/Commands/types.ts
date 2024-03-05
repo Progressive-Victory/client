@@ -18,7 +18,7 @@ export type ChatInputCommandBuilders =
 /**
  * Possible interaction return types
  */
-export type ReturnableInteraction = void;
+// export type ReturnableInteraction = void;
 
 // Other type that should be here but cant do becuse of error look ing to
 // | CommandInteraction | ContextMenuCommandInteraction | InteractionResponse<boolean> | Message<boolean>
