@@ -1,10 +1,7 @@
 import {
 	ChatInputCommandInteraction,
-	CommandInteraction,
 	ContextMenuCommandBuilder,
 	ContextMenuCommandInteraction,
-	InteractionResponse,
-	Message,
 	SharedSlashCommandOptions,
 	SlashCommandBuilder
 } from 'discord.js';
@@ -21,7 +18,10 @@ export type ChatInputCommandBuilders =
 /**
  * Possible interaction return types
  */
-export type ReturnableInteraction = void | CommandInteraction | ContextMenuCommandInteraction | InteractionResponse<boolean> | Message<boolean>;
+export type ReturnableInteraction = void;
+
+// Other type that should be here but cant do becuse of error look ing to
+// | CommandInteraction | ContextMenuCommandInteraction | InteractionResponse<boolean> | Message<boolean>
 
 /**
  * TypeCommand definition
