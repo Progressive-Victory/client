@@ -3,14 +3,14 @@ import {
 } from 'discord.js';
 import { BaseHelper } from '../HelpInfo/BaseHelper';
 import { ChatInputHelper } from '../HelpInfo/ChatInputHelper';
-import { ChatInputCommandBuilders, ReturnableInteraction } from './types';
+import { ChatInputCommandBuilders } from './types';
 
 export interface Command {
 	isGlobal: boolean;
 
 	builder: ChatInputCommandBuilders | ContextMenuCommandBuilder;
 
-	execute: (interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction) => Promise<ReturnableInteraction> | ReturnableInteraction;
+	execute: (interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction) => Promise<void>;
 
 	helpInfo: BaseHelper | ChatInputHelper;
 
@@ -35,7 +35,7 @@ export interface Command {
 	): this;
 
 	setExecute(
-		execute: (interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction) => Promise<ReturnableInteraction> | ReturnableInteraction
+		execute: (interaction: ChatInputCommandInteraction | ContextMenuCommandInteraction) => Promise<void>
 	): this;
 	/**
 	 * Set Help Info
